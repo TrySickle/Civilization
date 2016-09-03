@@ -132,23 +132,25 @@ public class Civilization {
 
     // updates resources
     public static void update() {
-        resources += 1;
+        double resourceGain = 1;
         if (happiness > 20) {
-            resources += getLength() * 5;
+            resourceGain += getLength() * 5;
         }
 
-        gold += getLength() * 3;
+        resources += resourceGain;
+        System.out.printf("You gained %.2f resources%n", resourceGain);
+
+        double goldGain = getLength() * 3;
+        gold += goldGain;
+        System.out.printf("You gained %.2f gold%n", goldGain);
 
         if ((resources % 2) == 0) {
             happiness++;
+            System.out.println("You gained 1 happiness");
         } else {
             happiness -= 3;
+            System.out.println("You lost 3 happiness");
         }
-    }
-
-    // for random tests
-    public static void test() {
-        System.out.println(name);
     }
 
     public static void addCity() {
@@ -166,6 +168,7 @@ public class Civilization {
             } else {
                 cities[index] = cityName;
                 gold -= 15.5;
+                System.out.printf("%s was settled! You lose 15.5 gold%n", cityName);
             }
         } else {
             System.out.println("Maximum of 5 cities reached");
@@ -188,7 +191,7 @@ public class Civilization {
         for (int i = 0; i < cities.length; i++) {
             if (cities[i] != null && cities[i].equalsIgnoreCase(city)) {
                 name = NAMES[i];
-                System.out.printf("%s was demolished!", city);
+                System.out.printf("%s was demolished! You gain 1.5 resources%n", city);
                 cities[i] = null;
                 resources += 1.5;
                 demolished = true;
@@ -216,7 +219,31 @@ public class Civilization {
             } else {
                 System.out.println("You can not demolish your only city!");
             }
-
+        } else if (anInput.equalsIgnoreCase("Build Militia")) {
+            if (gold >= 5.0 && resources >= 3.0) {
+                military++;
+                gold -= 5.0;
+                resources -= 3.0;
+                System.out.println("You gain 1 militia and lose 5 gold and 3 resources");
+            } else {
+                System.out.println("Insufficient gold and/or resources!");
+            }
+        } else if (anInput.equalsIgnoreCase("Research Technology")) {
+            if (gold >= 50.0 && resources >= 2.0) {
+                technology++;
+            }
+        } else if (anInput.equalsIgnoreCase("Attack Enemy City")) {
+            if (military >= 6) {
+                gold += 10;
+                happiness -= 3;
+                military -= 6;
+                attacks++;
+                System.out.println("You attacked an enemy city! You gain 10 gold and lose 6 militia and lose 3 happiness");
+            } else {
+                System.out.println("Insufficient militia");
+            }
+        } else if (anInput.equalsIgnoreCase("End Turn")) {
+            System.out.println("You skipped your turn");
         }
     }
 
