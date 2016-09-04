@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 public class Civilization {
-    static boolean playing = true;
-    static boolean victory = false;
-    static String input, civilization, name;
-    static String[] cities;
-    static int attacks, happiness, military, technology;
-    static double gold, resources;
-    static Scanner keyboard = new Scanner(System.in);
+    private static boolean playing = true;
+    private static boolean victory = false;
+    private static String input, civilization, name;
+    private static String[] cities;
+    private static int attacks, happiness, military, technology;
+    private static double gold, resources;
+    private static Scanner keyboard = new Scanner(System.in);
 
     // list of valid civilizations
     static final String[] VALID_CIVS =
@@ -144,13 +144,22 @@ public class Civilization {
         gold += goldGain;
         System.out.printf("You gained %.2f gold%n", goldGain);
 
-        if ((resources % 2) == 0) {
+        if ((roundResources(resources) % 2) == 0) {
             happiness++;
             System.out.println("You gained 1 happiness");
         } else {
             happiness -= 3;
             System.out.println("You lost 3 happiness");
         }
+    }
+
+    public static double roundResources(double r) {
+        String s = String.valueOf(r);
+        if ((s.substring(s.length() - 3, s.length() - 2)).equals(".5")) {
+            r += 0.5;
+        }
+
+        return r;
     }
 
     public static void addCity() {
@@ -168,7 +177,8 @@ public class Civilization {
             } else {
                 cities[index] = cityName;
                 gold -= 15.5;
-                System.out.printf("%s was settled! You lose 15.5 gold%n", cityName);
+                System.out.printf(
+                    "%s was settled! You lose 15.5 gold%n", cityName);
             }
         } else {
             System.out.println("Maximum of 5 cities reached");
@@ -191,7 +201,8 @@ public class Civilization {
         for (int i = 0; i < cities.length; i++) {
             if (cities[i] != null && cities[i].equalsIgnoreCase(city)) {
                 name = NAMES[i];
-                System.out.printf("%s was demolished! You gain 1.5 resources%n", city);
+                System.out.printf("%s was demolished!
+                You gain 1.5 resources%n", city);
                 cities[i] = null;
                 resources += 1.5;
                 demolished = true;
@@ -224,7 +235,8 @@ public class Civilization {
                 military++;
                 gold -= 5.0;
                 resources -= 3.0;
-                System.out.println("You gain 1 militia and lose 5 gold and 3 resources");
+                System.out.println(
+                    "You gain 1 militia and lose 5 gold and 3 resources");
             } else {
                 System.out.println("Insufficient gold and/or resources!");
             }
@@ -238,7 +250,8 @@ public class Civilization {
                 happiness -= 3;
                 military -= 6;
                 attacks++;
-                System.out.println("You attacked an enemy city! You gain 10 gold and lose 6 militia and lose 3 happiness");
+                System.out.println("You attacked an enemy city!
+                    You gain 10 gold and lose 6 militia and lose 3 happiness");
             } else {
                 System.out.println("Insufficient militia");
             }
