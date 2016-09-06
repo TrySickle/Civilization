@@ -214,7 +214,7 @@ public class Civilization {
         }
     }
 
-    public static void checkInput(String anInput) {
+    public static int checkInput(String anInput) {
         if (anInput.equalsIgnoreCase("Settle a City")) {
             if (gold >= 15.5) {
                 addCity();
@@ -257,7 +257,14 @@ public class Civilization {
             }
         } else if (anInput.equalsIgnoreCase("End Turn")) {
             System.out.println("You skipped your turn");
+        } else if (anInput.equalsIgnoreCase("?")) {
+            System.out.println("(Not case sensitive) Settle a City, Demolish a"
+                + " City, Build Militia, Attack an Enemy City, Research"
+                + " Technology, End Turn, Quit");
+            return 0;
         }
+
+        return 1;
     }
 
     public static void main(String[] args) {
@@ -274,9 +281,11 @@ public class Civilization {
 
         while (playing) {
             printUpdate();
-            System.out.printf("Enter a command, %s: ", name);
+            System.out.printf("(? for Commands) Enter a command, %s: ", name);
             input = keyboard.nextLine();
-            checkInput(input);
+            if(checkInput(input) == 0) {
+                continue;
+            }
             update();
             hasQuit(input);
             checkVictory();
