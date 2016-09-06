@@ -48,6 +48,18 @@ public class Civilization {
         }
     }
 
+    // initializes all player variables
+    public static void initialize(String cityName) {
+        cities = new String[5];
+        cities[0] = cityName;
+        attacks = 0;
+        gold = 20.5;
+        resources = 30.0;
+        happiness = 10;
+        military = 0;
+        technology = 0;
+    }
+
     // checks if the player quits
     public static void hasQuit(String anInput) {
         if (anInput.equalsIgnoreCase("quit")) {
@@ -77,18 +89,6 @@ public class Civilization {
         } else {
             System.out.println("You have lost!");
         }
-    }
-
-    // initializes all player variables
-    public static void initialize(String cityName) {
-        cities = new String[5];
-        cities[0] = cityName;
-        attacks = 0;
-        gold = 20.5;
-        resources = 30.0;
-        happiness = 10;
-        military = 0;
-        technology = 0;
     }
 
     // returns a nicely formatted string of cities
@@ -153,6 +153,7 @@ public class Civilization {
         System.out.printf("You gained %.2f gold%n", goldGain);
     }
 
+    // rounds resources so that demolishing works
     public static double roundResources(double r) {
         String s = String.valueOf(r);
         if ((s.substring(s.length() - 3, s.length() - 2)).equals(".5")) {
@@ -162,6 +163,7 @@ public class Civilization {
         return r;
     }
 
+    // settles a city
     public static void addCity() {
         int index = 1;
         if (getLength() < 5) {
@@ -185,6 +187,7 @@ public class Civilization {
         }
     }
 
+    // checks if the cities array contains a certain city
     public static boolean containsCity(String city) {
         boolean answer = false;
         for (int i = 4; i >= 0; i--) {
@@ -196,13 +199,13 @@ public class Civilization {
         return answer;
     }
 
+    // demolishes a city
     public static void demolishCity(String city) {
         boolean demolished = false;
         for (int i = 0; i < cities.length; i++) {
             if (cities[i] != null && cities[i].equalsIgnoreCase(city)) {
-                name = NAMES[i];
                 System.out.printf("%s was demolished!"
-                    + "You gain 1.5 resources%n", city);
+                    + " You gain 1.5 resources%n", city);
                 cities[i] = null;
                 resources += 1.5;
                 demolished = true;
@@ -214,6 +217,7 @@ public class Civilization {
         }
     }
 
+    // takes the player command and performs it
     public static int checkInput(String anInput) {
         if (anInput.equalsIgnoreCase("Settle a City")) {
             if (gold >= 15.5) {
