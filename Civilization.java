@@ -132,6 +132,14 @@ public class Civilization {
 
     // updates resources
     public static void update() {
+        if ((roundResources(resources) % 2) == 0) {
+            happiness++;
+            System.out.println("You gained 1 happiness");
+        } else {
+            happiness -= 3;
+            System.out.println("You lost 3 happiness");
+        }
+
         double resourceGain = 1;
         if (happiness > 20) {
             resourceGain += getLength() * 5;
@@ -143,14 +151,6 @@ public class Civilization {
         double goldGain = getLength() * 3;
         gold += goldGain;
         System.out.printf("You gained %.2f gold%n", goldGain);
-
-        if ((roundResources(resources) % 2) == 0) {
-            happiness++;
-            System.out.println("You gained 1 happiness");
-        } else {
-            happiness -= 3;
-            System.out.println("You lost 3 happiness");
-        }
     }
 
     public static double roundResources(double r) {
@@ -177,8 +177,8 @@ public class Civilization {
             } else {
                 cities[index] = cityName;
                 gold -= 15.5;
-                System.out.printf(
-                    "%s was settled! You lose 15.5 gold%n", cityName);
+                System.out.printf("%s was settled! You lose 15.5 gold%n",
+                    cityName);
             }
         } else {
             System.out.println("Maximum of 5 cities reached");
@@ -201,8 +201,8 @@ public class Civilization {
         for (int i = 0; i < cities.length; i++) {
             if (cities[i] != null && cities[i].equalsIgnoreCase(city)) {
                 name = NAMES[i];
-                System.out.printf("%s was demolished!
-                You gain 1.5 resources%n", city);
+                System.out.printf("%s was demolished!"
+                    + "You gain 1.5 resources%n", city);
                 cities[i] = null;
                 resources += 1.5;
                 demolished = true;
@@ -235,8 +235,8 @@ public class Civilization {
                 military++;
                 gold -= 5.0;
                 resources -= 3.0;
-                System.out.println(
-                    "You gain 1 militia and lose 5 gold and 3 resources");
+                System.out.println("You gain 1 militia and lose 5 gold "
+                    + "and 3 resources");
             } else {
                 System.out.println("Insufficient gold and/or resources!");
             }
@@ -250,8 +250,8 @@ public class Civilization {
                 happiness -= 3;
                 military -= 6;
                 attacks++;
-                System.out.println("You attacked an enemy city!
-                    You gain 10 gold and lose 6 militia and lose 3 happiness");
+                System.out.println("You attacked an enemy city! You gain 10 "
+                    + "gold and lose 6 militia and lose 3 happiness");
             } else {
                 System.out.println("Insufficient militia");
             }
@@ -274,7 +274,7 @@ public class Civilization {
 
         while (playing) {
             printUpdate();
-            System.out.print("Enter a command: ");
+            System.out.printf("Enter a command, %s: ", name);
             input = keyboard.nextLine();
             checkInput(input);
             update();
