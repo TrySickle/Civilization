@@ -287,7 +287,7 @@ public class Civilization {
             printUpdate();
             System.out.printf("(? for Commands) Enter a command, %s: ", name);
             input = keyboard.nextLine();
-            if(checkInput(input) == 1) {
+            if (checkInput(input) == 1) {
                 update();
                 hasQuit(input);
                 checkVictory();
