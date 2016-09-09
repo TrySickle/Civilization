@@ -246,7 +246,11 @@ public class Civilization {
             }
         } else if (anInput.equalsIgnoreCase("Research Technology")) {
             if (gold >= 50.0 && resources >= 2.0) {
+                System.out.println("You gain 1 technology point and lose"
+                    + " 50 gold and 2 resources");
                 technology++;
+            } else {
+                System.out.println("Insufficient gold and/or resources!");
             }
         } else if (anInput.equalsIgnoreCase("Attack Enemy City")) {
             if (military >= 6) {
@@ -266,6 +270,8 @@ public class Civilization {
                 + " City, Build Militia, Attack an Enemy City, Research"
                 + " Technology, End Turn, Quit");
             return 0;
+        } else {
+            System.out.println("Invalid command!");
         }
 
         return 1;
@@ -282,6 +288,7 @@ public class Civilization {
         System.out.print("Name your city: ");
         input = keyboard.nextLine();
         initialize(input);
+        update();
 
         while (playing) {
             printUpdate();
