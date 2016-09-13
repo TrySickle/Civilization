@@ -156,7 +156,8 @@ public class Civilization {
     // rounds resources so that demolishing works
     public static double roundResources(double r) {
         String s = String.valueOf(r);
-        if ((s.substring(s.length() - 3, s.length() - 2)).equals(".5")) {
+        int decimalIndex = s.indexOf(".");
+        if (s.substring(decimalIndex, decimalIndex + 2).equals(".5")) {
             r += 0.5;
         }
 
