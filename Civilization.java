@@ -132,6 +132,7 @@ public class Civilization {
 
     // updates resources
     public static void update() {
+        System.out.println();
         if ((roundResources(resources) % 2) == 0) {
             happiness++;
             System.out.println("You gained 1 happiness");
@@ -220,6 +221,7 @@ public class Civilization {
 
     // takes the player command and performs it
     public static int checkInput(String anInput) {
+        System.out.println();
         if (anInput.equalsIgnoreCase("Settle a City")) {
             if (gold >= 15.5) {
                 addCity();
@@ -228,7 +230,7 @@ public class Civilization {
             }
         } else if (anInput.equalsIgnoreCase("Demolish a City")) {
             if (getLength() > 1) {
-                System.out.printf("%nCities: %s%n", getCities());
+                System.out.printf("Cities: %s%n", getCities());
                 System.out.print("Enter a city to demolish: ");
                 String demolish = keyboard.nextLine();
                 demolishCity(demolish);
@@ -270,15 +272,18 @@ public class Civilization {
             System.out.println("(Not case sensitive) Settle a City, Demolish a"
                 + " City, Build Militia, Attack an Enemy City, Research"
                 + " Technology, End Turn, Quit");
+            // command list was printed
             return 0;
         } else {
             System.out.println("Invalid command!");
         }
 
+        // so that values are not updated when command list is printed
         return 1;
     }
 
     public static void main(String[] args) {
+        System.out.println("American, Zulu, English, Chinese");
         System.out.print("What civilization would you like to lead?: ");
         input = keyboard.next();
         setCivilization(input);
