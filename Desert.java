@@ -1,11 +1,15 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Desert {
     private Scanner scan = new Scanner(System.in);
+    private static Random rand = new Random();
 
     public int findTreasure() {
         // YOUR CODE HERE
         // A valid treasure trove must be greater than 0
+        
+
         return -1;
     }
 
