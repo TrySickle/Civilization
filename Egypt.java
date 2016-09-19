@@ -18,7 +18,7 @@ public class Egypt {
         System.out.println("What would you like to name your river?");
         String riverName = scan.next();
         river = new River(riverName);
-        settlements = new Settlement[/* some number*/5];
+        settlements = new Settlement[10];
         settlementNum = 0;
         population = new Population();
         strategy = new Strategy();
@@ -52,19 +52,6 @@ public class Egypt {
         // return true/false
     }
 
-    public boolean buildHouse(Settlement settlement) {
-        if (settlement.build(treasury.getCoins(), population, 50, 10)) {
-            treasury.spend(50);
-            technology.increaseExperience(1);
-            return true;
-        } else {
-            return false;
-        }
-        // cost 50 coins, 10 civilians
-        // increase 10 experienceLevel
-        // return true/false
-    }
-
     public void practiceHieroglyphics() {
         technology.improveWriting();
         population.increaseHappiness(10);
@@ -83,7 +70,7 @@ public class Egypt {
     }
 
     public int getNumSettlements() {
-        return settlements.length;
+        return settlementNum;
     }
 
     public Population getPopulation() {

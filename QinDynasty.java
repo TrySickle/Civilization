@@ -18,7 +18,7 @@ public class QinDynasty {
         System.out.println("What would you like to name your river?");
         String riverName = scan.next();
         river = new River(riverName);
-        settlements = new Settlement[5];
+        settlements = new Settlement[10];
         settlementNum = 0;
         population = new Population();
         strategy = new Strategy();
@@ -65,7 +65,7 @@ public class QinDynasty {
         // return true/false
     }
 
-    public void studyLegalism() {
+    public void establishLegalism() {
         technology.philosophize();
         population.decreaseHappiness(20);
     }
@@ -83,7 +83,7 @@ public class QinDynasty {
     }
 
     public int getNumSettlements() {
-        return settlements.length;
+        return settlementNum;
     }
 
     public Population getPopulation() {

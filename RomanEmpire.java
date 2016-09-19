@@ -18,7 +18,7 @@ public class RomanEmpire {
         System.out.println("What would you like to name your river?");
         String riverName = scan.next();
         river = new River(riverName);
-        settlements = new Settlement[/* some number*/5];
+        settlements = new Settlement[10];
         settlementNum = 0;
         population = new Population();
         strategy = new Strategy();
@@ -96,7 +96,7 @@ public class RomanEmpire {
     }
 
     public int getNumSettlements() {
-        return settlements.length;
+        return settlementNum;
     }
 
     public Population getPopulation() {

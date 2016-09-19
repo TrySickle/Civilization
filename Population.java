@@ -14,6 +14,10 @@ public class Population {
         happiness = 0;
     }
 
+    public int getCivilians() {
+        return civilians;
+    }
+
     public int getWarriors() {
         return warriors;
     }
