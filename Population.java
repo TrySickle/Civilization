@@ -43,7 +43,9 @@ public class Population {
     }
 
     public void decreaseHappiness(int amount) {
-        happiness -= amount;
+        if (happiness - amount >= 0) {
+            happiness -= amount;
+        }
     }
 
     public Game hunt(Hills hills) {

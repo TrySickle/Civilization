@@ -456,7 +456,7 @@ public class CivilizationGame {
         RomanEmpire rome = new RomanEmpire();
         while (!rome.getStrategy().conqueredTheWorld()
             && !rome.getTechnology().hasTechnologyWin()) {
-            System.out.println("\n\nWelcome to Egypt -"
+            System.out.println("\n\nWelcome to Rome -"
                 + " you have a strategy level of "
                 + rome.getStrategy().getStrategyLevel()
                 + ", an understanding of "
@@ -464,7 +464,7 @@ public class CivilizationGame {
                 + ", and a build experience of "
                 + rome.getTechnology().getBuildExperience()
                 + ".\n");
-            System.out.println("Welcome to Egypt - what would you like to do?\n"
+            System.out.println("Welcome to Rome - what would you like to do?\n"
                 + "1. Build my empire\n"
                 + "2. CONQUER\n"
                 + "3. Educate my citizens\n"

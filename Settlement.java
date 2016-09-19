@@ -5,7 +5,7 @@ public class Settlement {
 
     public Settlement(String name) {
         this.name = name;
-        buildings = new Building[/*some number?*/5];
+        buildings = new Building[5];
         numBuildings = 0;
     }
 

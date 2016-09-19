@@ -8,9 +8,11 @@ public class Desert {
     public int findTreasure() {
         // YOUR CODE HERE
         // A valid treasure trove must be greater than 0
-        
+        if ((int) (Math.random() * 10) == 0) {
+            while(lost());
+        }
 
-        return -1;
+        return rand.nextInt(500);
     }
 
     public boolean lost() {
