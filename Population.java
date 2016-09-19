@@ -27,11 +27,7 @@ public class Population {
     }
 
     public boolean canWork(int requiredWorkers) {
-        if (civilians >= requiredWorkers) {
-            return true;
-        } else {
-            return false;
-        }
+        return civilians >= requiredWorkers;
     }
 
     public boolean canBattle() {

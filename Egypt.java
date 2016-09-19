@@ -4,7 +4,7 @@ public class Egypt {
     private Desert desert;
     private River river;
     private Settlement[] settlements;
-    int settlementNum;
+    private int settlementNum;
     private Population population;
     private Strategy strategy;
     private Technology technology;

@@ -1,8 +1,8 @@
 public class Strategy {
     private int strategyLevel;
-    private final static int BATTLE_INCREASE = 10;
-    private final static int SIEGE_INCREASE = 40;
-    boolean conqueredTheWorld;
+    private static final int BATTLE_INCREASE = 10;
+    private static final int SIEGE_INCREASE = 40;
+    private boolean conqueredTheWorld;
 
     public Strategy() {
         strategyLevel = 0;

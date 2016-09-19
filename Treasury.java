@@ -14,8 +14,8 @@ public class Treasury {
         }
     }
 
-    public void earn(int coins) {
-        this.coins += coins;
+    public void earn(int earned) {
+        coins += earned;
     }
 
     public int getCoins() {
