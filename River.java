@@ -1,14 +1,18 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class River {
     private static Random rand = new Random();
+    private static Scanner scan = new Scanner(System.in);
 
     private String name;
     private int numFish;
     private Fish[] fish;
 
-    public River(String name) {
-        this.name = name;
+    public River() {
+        System.out.println("What would you like to name your river?");
+        String riverName = scan.next();
+        name = riverName;
         fish = new Fish[5];
         numFish = 0;
         replenishFish();

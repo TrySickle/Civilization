@@ -15,15 +15,13 @@ public class Egypt {
 
     public Egypt() {
         desert = new Desert();
-        System.out.println("What would you like to name your river?");
-        String riverName = scan.next();
-        river = new River(riverName);
+        river = new River();
         settlements = new Settlement[10];
         settlementNum = 0;
         population = new Population();
         strategy = new Strategy();
         technology = new Technology();
-        treasury = new Treasury(0);
+        treasury = new Treasury(200);
         coalMine = new CoalMine();
     }
 

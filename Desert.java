@@ -6,8 +6,6 @@ public class Desert {
     private static Random rand = new Random();
 
     public int findTreasure() {
-        // YOUR CODE HERE
-        // A valid treasure trove must be greater than 0
         if ((int) (Math.random() * 10) == 0) {
             while (lost()) {
                 // checkstyle plz

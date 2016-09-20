@@ -9,9 +9,9 @@ public class Population {
 
     public Population() {
         // how many????
-        warriors = 0;
-        civilians = 0;
-        happiness = 0;
+        warriors = 50;
+        civilians = 50;
+        happiness = 200;
     }
 
     public int getCivilians() {
