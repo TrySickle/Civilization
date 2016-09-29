@@ -5,6 +5,10 @@ public class Treasury {
         this.coins = coins;
     }
 
+    public Treasury() {
+        this(200);
+    }
+
     public boolean spend(int cost) {
         if (coins >= cost) {
             coins -= cost;

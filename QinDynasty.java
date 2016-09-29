@@ -21,7 +21,7 @@ public class QinDynasty {
         population = new Population();
         strategy = new Strategy();
         technology = new Technology();
-        treasury = new Treasury(200);
+        treasury = new Treasury();
         coalMine = new CoalMine();
     }
 
