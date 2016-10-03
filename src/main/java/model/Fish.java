@@ -1,4 +1,6 @@
-public class Fish {
+package model;
+
+class Fish {
     private int healthIncrease;
 
     public Fish(int health) {

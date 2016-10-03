@@ -1,8 +1,10 @@
-public class Game {
+package model;
+
+class Game {
     private int healthIncrease;
 
-    public Game(int health) {
-        this.healthIncrease = health;
+    public Game(int healthIncrease) {
+        this.healthIncrease = healthIncrease;
     }
 
     public Game() {
@@ -12,4 +14,5 @@ public class Game {
     public int getHealth() {
         return healthIncrease;
     }
+
 }
