@@ -17,6 +17,31 @@ public class Model {
     private Model() {
     }
 
+
+    public static boolean attackSelected(int r, int c) {
+        TerrainTile attackedTile = map.getTile(r, c);
+        Civilization owner = attackedTile.getOccupant().getOwner();
+        MilitaryUnit attacker = (MilitaryUnit) selected.getOccupant();
+        boolean canAttack = attacker.getCanAttack();
+
+        if (!attackedTile.isEmpty() && (owner != playerCivilization)
+            && canAttack) {
+
+            attacker.attack(attackedTile.getOccupant());
+
+            if (attacker.isDestroyed()) {
+                selected.setOccupant(null);
+            }
+
+            if (attackedTile.getOccupant().isDestroyed()) {
+                attackedTile.setOccupant(null);
+            }
+
+            return true;
+        }
+        return false;
+    }
+
     public static boolean getPlaying() {
         return playing;
     }
@@ -102,7 +127,6 @@ public class Model {
         default:
             return false;
         }
-        return false;
     }
 
     public static void addFirstSettlement(String name) {
@@ -221,10 +245,6 @@ public class Model {
         return false;
     }
 
-    public static boolean attackSelected(int r, int c) {
-        // TODO: Make this actually work :D
-        return false;
-    }
 
     public static boolean convertSelected() {
         Convertable worker = (Convertable) selected.getOccupant();
