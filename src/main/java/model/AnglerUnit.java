@@ -1,6 +1,18 @@
 package model;
 
+/**
+ * Represents an angler unit that can build a FishingShack
+ *
+ * @author Jim Harris
+ * @version 1.0
+ */
 class AnglerUnit extends Unit implements Convertable {
+
+    /**
+     * Public constructor
+     *
+     * @param owner The owner of this unit.
+     */
     public AnglerUnit(Civilization owner) {
         super(owner);
     }

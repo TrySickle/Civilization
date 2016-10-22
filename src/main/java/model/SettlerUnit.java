@@ -1,8 +1,21 @@
 package model;
 
+/**
+ * Represents a Settler unit that can build a Settlement.
+ *
+ * @version 1.0
+ * @author Jim Harris
+ */
 class SettlerUnit extends Unit implements Convertable {
+
     private String townName;
 
+    /**
+     * Public constructor.
+     *
+     * @param owner the owner of this unit.
+     * @param townName the name of the Settlement this unit will build.
+     */
     public SettlerUnit(Civilization owner, String townName) {
         super(owner);
         this.townName = townName;
@@ -19,10 +32,6 @@ class SettlerUnit extends Unit implements Convertable {
         return type == TileType.PLAINS;
     }
 
-    public String getTownName() {
-        return townName;
-    }
-
     @Override
     public char symbol() {
         return 's';
@@ -30,7 +39,6 @@ class SettlerUnit extends Unit implements Convertable {
 
     @Override
     public String toString() {
-        return String.format("Settlers of %s. %s", getTownName(),
-            super.toString());
+        return "Settlers of " + townName + ". " + super.toString();
     }
 }
