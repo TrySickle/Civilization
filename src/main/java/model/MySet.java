@@ -48,7 +48,7 @@ class MySet<E> implements SimpleSet<E> {
     public int find(E e) {
         int index = 0;
         for (int i = 0; i < backingArray.length; i++) {
-            if (e.equals(backingArray[i])) {
+            if (null != backingArray[i] && e.equals(backingArray[i])) {
                 index = i;
             }
         }
