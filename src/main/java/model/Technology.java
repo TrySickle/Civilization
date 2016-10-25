@@ -30,7 +30,7 @@ class Technology {
     public void gainATech() {
         techPoints++;
         while (!skills.add(Skill.getRandomSkill())) {
-            System.out.println("");
+            System.out.print("");
         }
     }
 

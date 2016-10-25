@@ -26,7 +26,9 @@ class FishingShack extends Building {
         replenishFish();
         int foodGeneration = 0;
         int goldGeneration = 0;
-        for (Fish f : fish.toArray()) {
+        Object[] fishes = fish.toArray();
+        for (Object o : fishes) {
+            Fish f = (Fish) o;
             foodGeneration += (int) (f.getHealth() / 2);
             goldGeneration += f.getHealth() - foodGeneration;
         }
@@ -70,10 +72,9 @@ class FishingShack extends Building {
         if (fish.isEmpty()) {
             for (int i = 0; i < 5; i++) {
                 while (!fish.add(new Fish(rand.nextInt(5), rand.nextInt(5)))) {
-                    System.out.println("");
+                    System.out.print("");
                 }
             }
-
             return true;
         }
         return false;
