@@ -65,10 +65,12 @@ class MySet<E> implements SimpleSet<E> {
     */
     @Override
     public E remove(E e) throws ElementDoesNotExistException {
+        E returnThis;
         if (contains(e)) {
+            returnThis = backingArray[find(e)];
             backingArray[find(e)] = null;
             numElements--;
-            return e;
+            return returnThis;
         } else {
             throw new ElementDoesNotExistException("Can't remove, not in set");
         }
