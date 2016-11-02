@@ -1,5 +1,5 @@
 package model;
-
+import java.util.ArrayList;
 /**
  * A wrapper class for all of the Objects needed in the game. Also has methods
  * to facilitate interactions between these objects, and methods to interface
@@ -11,6 +11,7 @@ package model;
 public class Model {
 
     private static Civilization playerCivilization;
+    private static ArrayList<Civilization> civs = new ArrayList<>();
     private static Map map;
     private static boolean playing;
     private static TerrainTile selected;
@@ -59,19 +60,46 @@ public class Model {
      * instantiated.
      */
     public static boolean chooseCivilization(int civChoice) {
+        boolean success = false;
         switch (civChoice) {
         case 1:
             playerCivilization = new Egypt();
-            return true;
+            civs.add(new QinDynasty());
+            civs.add(new RomanEmpire());
+            success = true;
+            break;
         case 2:
             playerCivilization = new QinDynasty();
-            return true;
+            civs.add(new Egypt());
+            civs.add(new RomanEmpire());
+            success = true;
+            break;
         case 3:
             playerCivilization = new RomanEmpire();
-            return true;
+            civs.add(new QinDynasty());
+            civs.add(new Egypt());
+            success = true;
+            break;
         default:
-            return false;
+            success = false;
         }
+        if (success) {
+            simulateEnemies();
+            civs.add(playerCivilization);
+        }
+        return success;
+    }
+
+    private static void simulateEnemies() {
+        civs.get(0).increaseHappiness(200);
+        civs.get(0).produceResources(100);
+        int i = 0;
+        while (i++ < 3) {
+            civs.get(1).getStrategy().battle();
+            civs.get(0).getTechnology().philosophize();
+        }
+        civs.get(0).getStrategy().battle();
+        civs.get(1).getTechnology().philosophize();
     }
 
     /**
@@ -81,6 +109,34 @@ public class Model {
      */
     public static String explore() {
         return playerCivilization.explore();
+    }
+
+    public static void standings(int choice) {
+        int i = 1;
+        switch (choice) {
+        case 1:
+            //Military Prowess
+            System.out.println("People with the Pointiest Sticks:");
+            break;
+        case 2:
+            //Citizen Happiness
+            System.out.println("People with the most faithful Citizens:");
+            break;
+        case 3:
+            //Tech Points
+            System.out.println("People with the best Science:");
+            break;
+        case 4:
+            //Amount of resources
+            System.out.println("People with the finest Resources:");
+            break;
+        case 5:
+            //Overall Prowess
+            System.out.println("People with the Fanciest Crowns");
+            break;
+        default:
+            break;
+        }
     }
 
     /**

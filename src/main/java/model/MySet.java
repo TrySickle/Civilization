@@ -2,247 +2,148 @@ package model;
 
 import java.util.Random;
 
+/**
+ * Represents a custom Set data structure.
+ *
+ * @author Ryan Voor
+ * @version 1.0
+ */
 class MySet<E> implements SimpleSet<E> {
-    private E[] backingArray;
+
+    private E[] data;
     private int numElements;
-    private Random rand = new Random();
-
-    public MySet(int length) {
-        backingArray = (E[]) new Object[length];
-        numElements = 0;
-    }
-
-    public MySet() {
-        this(5);
-    }
+    private final int startingSize = 5;
 
     /**
-    * Adds the passed in element to the set.
-    * @param e the element to be added to the set
-    */
+     * Public constructor.
+     */
+    @SuppressWarnings("unchecked")
+    public MySet() {
+        this.data = (E[]) new Object[startingSize];
+        this.numElements = 0;
+    }
+
     @Override
     public boolean add(E e) {
-        if (!contains(e)) {
-            if (isFull()) {
-                expand();
-            }
-            backingArray[findNull()] = e;
-            numElements++;
-            return true;
-        } else {
+        if (this.contains(e)) {
             return false;
         }
-    }
-
-    public int findNull() {
-        int index = 0;
-        for (int i = 0; i < backingArray.length; i++) {
-            if (null == backingArray[i]) {
-                index = i;
-            }
+        if (numElements >= data.length) {
+            this.doubleBackingArray();
         }
-
-        return index;
+        data[numElements++] = e;
+        return true;
     }
 
-    public int find(E e) {
-        int index = 0;
-        for (int i = 0; i < backingArray.length; i++) {
-            if (null != backingArray[i] && e.equals(backingArray[i])) {
-                index = i;
-            }
-        }
-
-        return index;
-    }
-
-    /**
-    * Removes the passed in element from the set if it is
-    * contained in the set, then returns the removed element
-    * otherwise throws as ElementDoesNotExistException
-    * @param e the element to be removed
-    * @return E the element that was removed
-    */
-    @Override
-    public E remove(E e) throws ElementDoesNotExistException {
-        E returnThis;
-        if (contains(e)) {
-            returnThis = backingArray[find(e)];
-            backingArray[find(e)] = null;
-            numElements--;
-            return returnThis;
-        } else {
-            throw new ElementDoesNotExistException("Can't remove, not in set");
-        }
-    }
-
-    /**
-    * Returns true if the passed in element is contained in
-    * the set.
-    * Returns false if the passed in element is not contained
-    * in the set.
-    * @param e the element to be checked
-    * @return whether the passed in element is contained
-    * in the set
-    */
     @Override
     public boolean contains(E e) {
-        boolean contain = false;
-
-        for (E thing : backingArray) {
-            if (thing != null && thing.equals(e)) {
-                contain = true;
+        for (int i = 0; i < numElements; i++) {
+            if (data[i].equals(e)) {
+                return true;
             }
         }
-
-        return contain;
+        return false;
     }
 
-    /**
-    * removes all the passed in elements from the set then returns them
-    * throws a ElementDoesNotExistException if one of the passed in elements
-    * is not in the set.
-    * NOTE: this method should not remove ANY elements from the set
-    * if it throws a ElementDoesNotExistException
-    * @param e the elements to be removed from the set
-    * @return E[] the elements that were removed from the set
-    */
     @Override
-    public E[] removeAll(E[] e) throws ElementDoesNotExistException {
-        boolean canRemove = true;
-        E[] returnArray = (E[]) new Object[e.length];
-
-        for (E thing : e) {
-            if (!contains(thing)) {
-                canRemove = false;
-            }
-        }
-
-        if (canRemove) {
-            for (int i = 0; i < e.length; i++) {
-                remove(e[i]);
+    public E remove(E e) throws ElementDoesNotExistException {
+        for (int i = 0; i < numElements; i++) {
+            if (data[i].equals(e)) {
+                E toBeReturned = data[i];
+                data[i] = null;
+                for (int j = i; j < numElements; j++) {
+                    data[j] = data[j + 1];
+                }
                 numElements--;
-                returnArray[i] = e[i];
+                return toBeReturned;
             }
-
-            return returnArray;
-        } else {
-            throw new ElementDoesNotExistException("removeAll: Not in set");
         }
+        throw new ElementDoesNotExistException(
+            "Cannot remove an element that isn't in the set!", e);
     }
 
-    /**
-    * Removes all elements from the set.
-    */
     @Override
-    public void clear() {
-        backingArray = (E[]) new Object[5];
-        numElements = 0;
+    @SuppressWarnings("unchecked")
+    public E[] removeAll(E[] elements) throws ElementDoesNotExistException {
+        for (E element: elements) {
+            if (!this.contains(element)) {
+                throw new ElementDoesNotExistException("Attempted to remove "
+                    + element + " from set but it wasn't in the set!");
+            }
+        }
+        E[] results = (E[]) new Object[elements.length];
+        int counter = 0;
+        for (E element: elements) {
+            // this guard is in case there are duplicate elements in the
+            // parameter array
+            if (this.contains(element)) {
+                results[counter++] = this.remove(element);
+            }
+        }
+        return results;
     }
 
-    /**
-    * Returns the number of elements contained in the set.
-    * @return int the number of elements in the set
-    */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void clear() {
+        this.data = (E[]) new Object[startingSize];
+        this.numElements = 0;
+    }
+
     @Override
     public int size() {
         return numElements;
     }
 
-    /**
-    * Returns false if the set contains 1 or more elements and
-    * returns true if the set contains no elements.
-    * @return boolean whether the set contains any elements
-    */
     @Override
     public boolean isEmpty() {
-        boolean empty = true;
-
-        for (E thing : backingArray) {
-            if (null != thing) {
-                empty = false;
-            }
-        }
-
-        return empty;
+        return numElements == 0;
     }
 
-    public boolean isFull() {
-        boolean full = true;
-
-        for (E thing : backingArray) {
-            if (null == thing) {
-                full = false;
-            }
-        }
-
-        return full;
-    }
-
-    public void expand() {
-        E[] copyArray = (E[]) new Object[backingArray.length * 2];
-        for (int i = 0; i < backingArray.length; i++) {
-            copyArray[i] = backingArray[i];
-        }
-
-        backingArray = copyArray;
-    }
-
-    /**
-    * Returns a random element from the set.
-    * NOTE: because the set has no ordering returning any element in the
-    * set is effectively returning a "random" element
-    * throws a ElementDoesNotExistException if there are no elements
-    * in the set
-    * HINT: you may import java.util.Random to help with this if
-    * you want
-    * @return E a random element from the set
-    */
     @Override
     public E getRandomElement() throws ElementDoesNotExistException {
-        if (isEmpty()) {
-            throw new ElementDoesNotExistException("Random: empty");
+        if (this.isEmpty()) {
+            throw new ElementDoesNotExistException(
+                "Cannot get an element from a empty set!");
         }
-
-        E[] elements = toArray();
-        return elements[rand.nextInt(elements.length)];
+        Random rand = new Random();
+        return data[rand.nextInt(numElements)];
     }
 
-    /**
-    * Returns an array of all the elements contained within the SimpleSet.
-    * There should be no nulls in the array.
-    * @return an array containing all the elements contained
-    * within the set
-    */
     @Override
+    @SuppressWarnings("unchecked")
     public E[] toArray() {
-        E[] notNull = (E[]) new Object[numElements];
-        int index = 0;
-        for (int i = 0; i < backingArray.length; i++) {
-            if (backingArray[i] != null) {
-                notNull[index] = backingArray[i];
-                index++;
-            }
+        E[] result = (E[]) new Object[numElements];
+        for (int i = 0; i < numElements; i++) {
+            result[i] = data[i];
         }
-
-        return notNull;
+        return result;
     }
 
-    /**
-    * Calculates and returns a String representation of this object.
-    * Any String that shows each individual element's toString
-    * is acceptable.
-    * @return String the String representation of this object
-    */
     @Override
     public String toString() {
-        String returnString = "";
-        E[] elements = toArray();
-        for (E thing : elements) {
-            returnString += thing.toString() + " ";
+        String result = "[";
+        for (int i = 0; i < numElements; i++) {
+            if (i == numElements - 1) {
+                result += "" + data[i];
+            } else {
+                result += "" + data[i] + ", ";
+            }
         }
-        returnString.trim();
+        result += "]";
+        return result;
+    }
 
-        return returnString;
+    /**
+     * Doubles the size of the backing array while maintaining all of the
+     * elements in the SimpleSet.
+     */
+    @SuppressWarnings("unchecked")
+    private void doubleBackingArray() {
+        E[] newArray = (E[]) new Object[data.length * 2];
+        for (int i = 0; i < numElements; i++) {
+            newArray[i] = data[i];
+        }
+        data = newArray;
     }
 }
