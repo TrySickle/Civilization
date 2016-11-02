@@ -147,15 +147,32 @@ public class Model {
     }
 
     private static void simulateEnemies() {
-        civs.get(0).increaseHappiness(200);
-        civs.get(0).produceResources(100);
-        int i = 0;
-        while (i++ < 3) {
-            civs.get(1).getStrategy().battle();
-            civs.get(0).getTechnology().philosophize();
+        //Add more civilizations for show
+        civs.add(new Civilization("America"));
+        civs.add(new Civilization("Aztec"));
+        civs.add(new Civilization("China"));
+        civs.add(new Civilization("India"));
+        civs.add(new Civilization("Japan"));
+        java.util.Random rand = new java.util.Random();
+        for (Civilization c : civs) {
+            c.increaseHappiness(rand.nextInt(500) + 1);
+            c.produceResources(rand.nextInt(500) + 1);
+            int count = rand.nextInt(10) + 1;
+            int i = 0;
+            while (i++ < count) {
+                c.getStrategy().battle();
+            }
+            count = rand.nextInt(10) + 1;
+            i = 0;
+            while (i++ < count) {
+                c.getTechnology().philosophize();
+            }
+            count = rand.nextInt(5) + 1;
+            i = 0;
+            while (i++ < count) {
+                c.incrementNumSettlements();
+            }
         }
-        civs.get(0).getStrategy().battle();
-        civs.get(1).getTechnology().philosophize();
     }
 
     /**

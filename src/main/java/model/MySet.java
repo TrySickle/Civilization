@@ -29,7 +29,11 @@ class MySet<E> implements SimpleSet<E>, Iterable<E> {
         }
 
         public void remove() {
-            data[cursor - 1] = null;
+            try {
+                MySet.this.remove(data[cursor - 1]);
+            } catch (ElementDoesNotExistException e) {
+                System.out.println("Will never happen");
+            }
         }
     }
 
