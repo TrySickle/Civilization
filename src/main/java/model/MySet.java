@@ -21,7 +21,9 @@ class MySet<E> implements SimpleSet<E>, Iterable<E> {
         }
 
         public E next() {
-            if (!hasNext()) { throw new NoSuchElementException(); }
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             E answer = data[cursor++];
             return answer;
         }
