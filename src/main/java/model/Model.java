@@ -1,5 +1,7 @@
 package model;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 /**
  * A wrapper class for all of the Objects needed in the game. Also has methods
  * to facilitate interactions between these objects, and methods to interface
@@ -9,6 +11,60 @@ import java.util.ArrayList;
  * @author Jim Harris, Ryan Voor
  */
 public class Model {
+
+    static class MilitaryComparator implements Comparator<Civilization> {
+
+        public int compare(Civilization a, Civilization b) {
+            return b.getStrategy().getStrategyLevel()
+                - a.getStrategy().getStrategyLevel();
+        }
+    }
+
+    static class HappinessComparator implements Comparator<Civilization> {
+
+        public int compare(Civilization a, Civilization b) {
+            return b.getHappiness() - a.getHappiness();
+        }
+    }
+
+    static class TechnologyComparator implements Comparator<Civilization> {
+
+        public int compare(Civilization a, Civilization b) {
+            return b.getTechnology().getTechPoints()
+                - a.getTechnology().getTechPoints();
+        }
+    }
+
+    static class ResourcesComparator implements Comparator<Civilization> {
+
+        public int compare(Civilization a, Civilization b) {
+            return b.getResources() - a.getResources();
+        }
+    }
+
+    static class OverallProwessComparator implements Comparator<Civilization> {
+
+        public int compare(Civilization a, Civilization b) {
+            int aSettlements = a.getNumSettlements();
+            int bSettlements = b.getNumSettlements();
+            int aMilitary = a.getStrategy().getStrategyLevel();
+            int bMilitary = b.getStrategy().getStrategyLevel();
+
+            if (aSettlements > bSettlements) {
+                return -1;
+            } else if (aSettlements == bSettlements) {
+                if (aMilitary > bMilitary) {
+                    return -1;
+                } else if (aMilitary < bMilitary) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return 1;
+            }
+        }
+    }
 
     private static Civilization playerCivilization;
     private static ArrayList<Civilization> civs = new ArrayList<>();
@@ -112,27 +168,63 @@ public class Model {
     }
 
     public static void standings(int choice) {
-        int i = 1;
         switch (choice) {
         case 1:
             //Military Prowess
             System.out.println("People with the Pointiest Sticks:");
+            Collections.sort(civs, new MilitaryComparator());
+            for (int i = 1; i <= civs.size(); i++) {
+                Civilization chosen = civs.get(i - 1);
+                String name = chosen.getName();
+                int militaryLevel = chosen.getStrategy().getStrategyLevel();
+                System.out.printf("%d %s: %d%n", i, name, militaryLevel);
+            }
             break;
         case 2:
             //Citizen Happiness
             System.out.println("People with the most faithful Citizens:");
+            Collections.sort(civs, new HappinessComparator());
+            for (int i = 1; i <= civs.size(); i++) {
+                Civilization chosen = civs.get(i - 1);
+                String name = chosen.getName();
+                int happinessLevel = chosen.getHappiness();
+                System.out.printf("%d %s: %d%n", i, name, happinessLevel);
+            }
             break;
         case 3:
             //Tech Points
             System.out.println("People with the best Science:");
+            Collections.sort(civs, new TechnologyComparator());
+            for (int i = 1; i <= civs.size(); i++) {
+                Civilization chosen = civs.get(i - 1);
+                String name = chosen.getName();
+                int techLevel = chosen.getTechnology().getTechPoints();
+                System.out.printf("%d %s: %d%n", i, name, techLevel);
+            }
             break;
         case 4:
             //Amount of resources
             System.out.println("People with the finest Resources:");
+            Collections.sort(civs, new ResourcesComparator());
+            for (int i = 1; i <= civs.size(); i++) {
+                Civilization chosen = civs.get(i - 1);
+                String name = chosen.getName();
+                int resources = chosen.getResources();
+                System.out.printf("%d %s: %d%n", i, name, resources);
+            }
             break;
         case 5:
             //Overall Prowess
             System.out.println("People with the Fanciest Crowns");
+            Collections.sort(civs, new OverallProwessComparator());
+            for (int i = 1; i <= civs.size(); i++) {
+                Civilization chosen = civs.get(i - 1);
+                String name = chosen.getName();
+                int militaryLevel = chosen.getStrategy().getStrategyLevel();
+                int numSettlements = chosen.getNumSettlements();
+                System.out.printf("%d %s: Settlements - %d Military level - "
+                    + "%d%n", i, name, numSettlements, militaryLevel);
+            }
             break;
         default:
             break;
