@@ -53,13 +53,7 @@ public class Model {
             if (aSettlements > bSettlements) {
                 return -1;
             } else if (aSettlements == bSettlements) {
-                if (aMilitary > bMilitary) {
-                    return -1;
-                } else if (aMilitary < bMilitary) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return bMilitary - aMilitary;
             } else {
                 return 1;
             }
