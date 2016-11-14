@@ -1,7 +1,7 @@
 package model;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
+import java.util.Random;
+
 /**
  * A wrapper class for all of the Objects needed in the game. Also has methods
  * to facilitate interactions between these objects, and methods to interface
@@ -10,15 +10,19 @@ import java.util.Comparator;
  * @version 2.0
  * @author Jim Harris, Ryan Voor
  */
+
+//Dead code now? - Marc
 public class Model {
 
     private static Civilization playerCivilization;
-    private static ArrayList<Civilization> civs = new ArrayList<>();
+    private static Bandit enemyCiv = new Bandit();
     private static Map map;
     private static boolean playing;
     private static TerrainTile selected;
+    private static TerrainTile oldSelected;
     private static int selectedRow;
     private static int selectedCol;
+    private static Random rand = new Random();
 
     static {
         map = new Map(10, 10);
@@ -50,11 +54,11 @@ public class Model {
     /**
      * Instantiates the player civilization based on a user selection. Will only
      * do this if a valid option is entered for @param{civChoice}:
-     *
+     * <p>
      * 1: Egypt
      * 2: QinDyansty
      * 3: RomanEmpire
-     *
+     * <p>
      * This is a prerequisite to most of this class actually working.
      *
      * @param civChoice the user choice for which civlization to play.
@@ -62,62 +66,18 @@ public class Model {
      * instantiated.
      */
     public static boolean chooseCivilization(int civChoice) {
-        boolean success = false;
         switch (civChoice) {
         case 1:
             playerCivilization = new Egypt();
-            civs.add(new QinDynasty());
-            civs.add(new RomanEmpire());
-            success = true;
-            break;
+            return true;
         case 2:
             playerCivilization = new QinDynasty();
-            civs.add(new Egypt());
-            civs.add(new RomanEmpire());
-            success = true;
-            break;
+            return true;
         case 3:
             playerCivilization = new RomanEmpire();
-            civs.add(new QinDynasty());
-            civs.add(new Egypt());
-            success = true;
-            break;
+            return true;
         default:
-            success = false;
-        }
-        if (success) {
-            simulateEnemies();
-            civs.add(playerCivilization);
-        }
-        return success;
-    }
-
-    private static void simulateEnemies() {
-        //Add more civilizations for show
-        civs.add(new Civilization("America"));
-        civs.add(new Civilization("Aztec"));
-        civs.add(new Civilization("China"));
-        civs.add(new Civilization("India"));
-        civs.add(new Civilization("Japan"));
-        java.util.Random rand = new java.util.Random();
-        for (Civilization c : civs) {
-            c.increaseHappiness(rand.nextInt(500) + 1);
-            c.produceResources(rand.nextInt(500) + 1);
-            int count = rand.nextInt(10) + 1;
-            int i = 0;
-            while (i++ < count) {
-                c.getStrategy().battle();
-            }
-            count = rand.nextInt(10) + 1;
-            i = 0;
-            while (i++ < count) {
-                c.getTechnology().philosophize();
-            }
-            count = rand.nextInt(5) + 1;
-            i = 0;
-            while (i++ < count) {
-                c.incrementNumSettlements();
-            }
+            return false;
         }
     }
 
@@ -130,118 +90,47 @@ public class Model {
         return playerCivilization.explore();
     }
 
-    public static void standings(int choice) {
-        switch (choice) {
-        case 1:
-            //Military Prowess
-            System.out.println("People with the Pointiest Sticks:");
-            Collections.sort(civs, (Civilization a, Civilization b) -> {
-                    return b.getStrategy().getStrategyLevel()
-                        - a.getStrategy().getStrategyLevel();
-                });
-            for (int i = 1; i <= civs.size(); i++) {
-                Civilization chosen = civs.get(i - 1);
-                String name = chosen.getName();
-                int militaryLevel = chosen.getStrategy().getStrategyLevel();
-                System.out.printf("%d %s: %d%n", i, name, militaryLevel);
-            }
-            break;
-        case 2:
-            //Citizen Happiness
-            System.out.println("People with the most faithful Citizens:");
-            Collections.sort(civs, (Civilization a, Civilization b) -> {
-                    return b.getHappiness() - a.getHappiness();
-                });
-            for (int i = 1; i <= civs.size(); i++) {
-                Civilization chosen = civs.get(i - 1);
-                String name = chosen.getName();
-                int happinessLevel = chosen.getHappiness();
-                System.out.printf("%d %s: %d%n", i, name, happinessLevel);
-            }
-            break;
-        case 3:
-            //Tech Points
-            System.out.println("People with the best Science:");
-            Collections.sort(civs, (Civilization a, Civilization b) -> {
-                    return b.getTechnology().getTechPoints()
-                        - a.getTechnology().getTechPoints();
-                });
-            for (int i = 1; i <= civs.size(); i++) {
-                Civilization chosen = civs.get(i - 1);
-                String name = chosen.getName();
-                int techLevel = chosen.getTechnology().getTechPoints();
-                System.out.printf("%d %s: %d%n", i, name, techLevel);
-            }
-            break;
-        case 4:
-            //Amount of resources
-            System.out.println("People with the finest Resources:");
-            Collections.sort(civs, (Civilization a, Civilization b) -> {
-                    return b.getResources() - a.getResources();
-                });
-            for (int i = 1; i <= civs.size(); i++) {
-                Civilization chosen = civs.get(i - 1);
-                String name = chosen.getName();
-                int resources = chosen.getResources();
-                System.out.printf("%d %s: %d%n", i, name, resources);
-            }
-            break;
-        case 5:
-            //Overall Prowess
-            System.out.println("People with the Fanciest Crowns");
-            Comparator<Civilization> bySettlementsThenMilitary =
-                Comparator.comparing(Civilization::getNumSettlements)
-                .thenComparing(t -> t.getStrategy().getStrategyLevel())
-                .reversed();
-            Collections.sort(civs, bySettlementsThenMilitary);
-            for (int i = 1; i <= civs.size(); i++) {
-                Civilization chosen = civs.get(i - 1);
-                String name = chosen.getName();
-                int militaryLevel = chosen.getStrategy().getStrategyLevel();
-                int numSettlements = chosen.getNumSettlements();
-                System.out.printf("%d %s: Settlements - %d Military level - "
-                    + "%d%n", i, name, numSettlements, militaryLevel);
-            }
-            break;
-        default:
-            break;
-        }
-    }
-
     /**
      * Puts a Settlement onto the map. This is slightly convenient because it
      * forces the number of settlements to get increased as well, which is
      * something that can be easily forgotten.
      *
      * @param name the name of the Settlement.
-     * @param civ the Civilization that owns the new Settlement.
-     * @param r the row to add at.
-     * @param c the column to add at.
+     * @param civ  the Civilization that owns the new Settlement.
+     * @param r    the row to add at.
+     * @param c    the column to add at.
      */
     public static void putSettlement(String name, Civilization civ,
-        int r, int c) {
+                                     int r, int c) {
         map.getTile(r, c).setOccupant(civ.getSettlement(name));
-        playerCivilization.incrementNumSettlements();
+        civ.incrementNumSettlements();
     }
 
     /**
      * Adds some enemies and an enemy settlement onto the Map.
      *
-     * @param civ the enemy Civilization.
+     * @param bandit the enemy Civilization.
      */
-    public static void addEnemies(Civilization civ) {
-        map.getTile(4, 7).setOccupant(civ.getMeleeUnit());
-        map.getTile(5, 7).setOccupant(civ.getMeleeUnit());
-        map.getTile(4, 6).setOccupant(civ.getMeleeUnit());
-        putSettlement("Bandit Hideout", civ, 5, 8);
+    private static void addEnemies(Bandit bandit, int numEnemies) {
+        for (int i = 0; i < numEnemies; i++) {
+            int r = rand.nextInt(10);
+            int c = rand.nextInt(10);
+            putSettlement("Bandit Hideout", bandit, 9, 0);
+            while (!map.getTile(r, c).isEmpty()) {
+                //try to get new coords
+                r = rand.nextInt(10);
+                c = rand.nextInt(10);
+            }
+            // bandit.addUnit(map.getTile(r, c), bandit.getMeleeUnit());
+        }
     }
 
     /**
      * Returns whether or not the tile at r, c is adjacent to something.
      * This something depends on some code that is passed through @param{what}.
      *
-     * @param r the row of the tile to check adjacency of.
-     * @param c the column of the tile to check adjacency of.
+     * @param r    the row of the tile to check adjacency of.
+     * @param c    the column of the tile to check adjacency of.
      * @param what a code that gets passed in to determine what we're checking
      * adjacency to. If "SETTLEMENT" is passed in, it checks if the tile at r, c
      * is adjacent to a Settlement on the map. "FR_SETTLEMENT" checks for a
@@ -251,33 +140,12 @@ public class Model {
      * adjacent to something.
      */
     public static boolean adjacentTo(int r, int c, String what) {
-        if (c % 2 == 0) {
-            if (r < map.getRows() - 1
-                && adjBool(r + 1, c, what)) {
-                return true;
-            } else {
-                for (int r2 = r - 1; r2 < r + 1 && r2 > -1
-                    && r2 < map.getRows();
-                    r2++) {
-                    for (int c2 = (c == 0 ? 0 : c - 1); c2 < c + 2
-                        && c2 < map.getColumns(); c2++) {
-                        if (adjBool(r2, c2, what)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        } else {
-            if (r > 0 && adjBool(r - 1, c, what)) {
-                return true;
-            } else {
-                for (int r2 = r; r2 < r + 2 && r2 < map.getRows();
-                    r2++) {
-                    for (int c2 = (c == 0 ? 0 : c - 1); c2 < c + 2
-                        && c2 < map.getColumns(); c2++) {
-                        if (adjBool(r2, c2, what)) {
-                            return true;
-                        }
+        for (int i = r - 1; i <= r + 1; i++) {
+            for (int j = c - 1; j <= c + 1; j++) {
+                if (i >= 0 && i < map.getRows()
+                        && j >= 0 && j < map.getColumns()) {
+                    if (adjBool(i, j, what) && !(i == r && j == c)) {
+                        return true;
                     }
                 }
             }
@@ -286,8 +154,8 @@ public class Model {
     }
 
     /**
-     * @param r the row of the tile to check.
-     * @param c the column of the tile to check.
+     * @param r    the row of the tile to check.
+     * @param c    the column of the tile to check.
      * @param what the code for what we are looking for at tile (r, c)
      * @return whether or not a particular thing occupies (r, c)
      */
@@ -299,8 +167,8 @@ public class Model {
             return map.getTile(r, c) == selected;
         case "FR_SETTLEMENT":
             return adjBool(r, c, "SETTLEMENT")
-                && map.getTile(r, c).getOccupant().getOwner()
-                == playerCivilization;
+                    && map.getTile(r, c).getOccupant().getOwner()
+                    == playerCivilization;
         default:
             break;
         }
@@ -312,37 +180,70 @@ public class Model {
      * be called when the game starts up for the first time, and after the
      * player has selected their civilization and provided a name for the
      * Settlement.
+     * <p>
+     * Refactored to populate entire board with home settlement and bandit(Marc)
      *
      * @param name the name of the first player Settlement.
      */
     public static void addFirstSettlement(String name) {
-        putSettlement(name, playerCivilization, 5 , 5);
-        addEnemies(new Civilization("Bandits"));
+        putSettlement(name, playerCivilization, 0, 9);
+        addEnemies(enemyCiv, 5);
     }
-
     /**
-     * @return a String containing the entire game screen to be printed out to
-     * show the current game state.
-     */
-    public static String gameScreen() {
-        Civilization civ = playerCivilization;
-        String gameScreen = map.toString()
-            + "Materials:\n"
-            + "Gold: " + civ.getTreasury().getCoins() + "\t"
-            + "Food: " + civ.getFood() + "\t"
-            + "Resources: " + civ.getResources() + "\t"
-            + "Happiness: " + civ.getHappiness() + "\n"
-            + "Stats:\n"
-            + "Philosophy Points: " + civ.getTechnology().getUnderstanding()
-            + "\t"
-            + "Build Experience: " + civ.getTechnology().getBuildExperience()
-            + "\t"
-            + "Skills: " + civ.getSkillsString()
-            + "\t"
-            + "Strategy Points: " + civ.getStrategy().getStrategyLevel()
-            + "\t"
-            + "Settlements Remaining: " + civ.getNumSettlements() + "\n";
-        return gameScreen;
+    * gets the gold of the civilization
+    * @return int
+    */
+    public static int getGold() {
+        return playerCivilization.getTreasury().getCoins();
+    }
+    /**
+    * gets the food of the civilization
+    * @return int
+    */
+    public static int getFood() {
+        return playerCivilization.getFood();
+    }
+    /**
+    * gets the resource of the civilization
+    * @return int
+    */
+    public static int getResources() {
+        return playerCivilization.getResources();
+    }
+    /**
+    * gets the hapiness of the civilization
+    * @return int
+    */
+    public static int getHappiness() {
+        return playerCivilization.getHappiness();
+    }
+    /**
+    * gets the philosophy of the civilization
+    * @return int
+    */
+    public static int getPhilosophy() {
+        return playerCivilization.getTechnology().getUnderstanding();
+    }
+    /**
+    * gets the build experience of the civilization
+    * @return int
+    */
+    public static int getBuildExperience() {
+        return playerCivilization.getTechnology().getBuildExperience();
+    }
+    /**
+    * gets the strategy of the civilization
+    * @return int
+    */
+    public static int getStrategy() {
+        return playerCivilization.getStrategy().getStrategyLevel();
+    }
+    /**
+    * gets the number of settlements of the civilization
+    * @return int
+    */
+    public static int getSettlementRemaining() {
+        return playerCivilization.getNumSettlements();
     }
 
     /**
@@ -358,61 +259,12 @@ public class Model {
         selectedCol = c;
     }
 
-    /**
-     * Returns a code representing what kind of MapObject is on selected.
-     *
-     * BUILDING: selected contains a Building.
-     * MILITARY_UNIT: a player controlled MilitaryUnit
-     * WORKER_UNIT: a player controlled worker Unit.
-     * RECRUIT_SPACE: selected has no occupant and is adjacent to a player
-     * controlled Settlement.
-     *
-     * In the event that an enemy unit is on selected, or selected is empty but
-     * not adjacent to a friendly Settlement, the player can't do anything, so
-     * a String just gets returned which can be printed out to indicate what is
-     * on the selected Tile.
-     *
-     * @return a String indicating what is on the selected tile.
-     */
-    public static String selectedOptions() {
-        MapObject occupant = selected.getOccupant();
-        if (occupant != null) {
-            if (occupant.getOwner() != playerCivilization) {
-                return "That tile contains the enemy " + occupant.toString();
-            } else if (occupant instanceof Building) {
-                return "BUILDING";
-            } else if (occupant instanceof MilitaryUnit) {
-                return "MILITARY_UNIT";
-            } else {
-                return "WORKER_UNIT";
-            }
-        } else if (adjacentTo(selectedRow, selectedCol, "FR_SETTLEMENT")) {
-            return "RECRUIT_SPACE";
-        } else {
-            return "That tile is empty, and is a " + selected.toString();
-        }
-    }
-
-    /**
-     * @return the toString of the selected tile.
-     */
-    public static String selectedString() {
-        return selected.toString();
-    }
-
-    /**
-     * @return the toString of the selected tile's occupant.
-     */
-    public static String selectedMapObjectString() {
-        return selected != null
-            ? selected.getOccupant().toString()
-            : "null";
-    }
 
     /**
      * calls the move method and returns whether the move was successfully
      * executed
      * NOTE: THIS METHOD SHOULD USE NO MORE THAN ONE CATCH BLOCK
+     *
      * @param r the
      * @param c the column value of the tile to be moved to
      * @return boolean whether the move was successfully executed
@@ -438,25 +290,25 @@ public class Model {
      * Does not execute the move if any exception is thrown.
      */
     private static void move(int r, int c)
-        throws NotAdjacentToSelectedTileException,
+            throws NotAdjacentToSelectedTileException,
             UnitCannotMoveException, TileAlreadyOccupiedException {
         if (!adjacentTo(r, c, "SELECTED")) {
             throw new NotAdjacentToSelectedTileException(
-                "That Tile isn't adjacent to the currently selected Tile.");
+                    "That Tile isn't adjacent to the currently selected Tile.");
         }
         if (!((Unit) selected.getOccupant())
-            .canMove(selected.getType().getCost())) {
+                .canMove(selected.getType().getCost())) {
             throw new UnitCannotMoveException(
-                "That unit cannot move for some reason.");
+                    "That unit cannot move for some reason.");
         }
         if (!map.isEmpty(r, c)) {
             throw new TileAlreadyOccupiedException(
-                "The Tile you tried to move to is already"
-                    + " occupied by another unit");
+                    "The Tile you tried to move to is already"
+                            + " occupied by another unit");
         }
         map.getTile(r, c).setOccupant(selected.getOccupant());
         ((Unit) selected.getOccupant()).deductEndurance(
-            map.getTile(r, c).getType().getCost());
+                map.getTile(r, c).getType().getCost());
         selected.setOccupant(null);
     }
 
@@ -467,7 +319,7 @@ public class Model {
      * selected is empty.
      *
      * @param selection an int representing what kind of unit to recruit.
-     * @param name the name of the Settlement a Settler might settle.
+     * @param name      the name of the Settlement a Settler might settle.
      * @return a boolean representing whether or not a unit was recruited.
      */
     public static boolean recruitSelected(int selection, String name) {
@@ -526,9 +378,9 @@ public class Model {
         MapObject enemy = map.getTile(r, c).getOccupant();
         MapObject attacker = selected.getOccupant();
         if (selected.getOccupant() instanceof MilitaryUnit
-            && enemy != null && enemy.getOwner() != playerCivilization
-            && ((Unit) attacker).getCanAttack()
-            && adjacentTo(r, c, "SELECTED")) {
+                && enemy != null && enemy.getOwner() != playerCivilization
+                && ((Unit) attacker).getCanAttack()
+                && adjacentTo(r, c, "SELECTED")) {
             ((MilitaryUnit) attacker).attack(enemy);
             if (attacker.isDestroyed()) {
                 selected.setOccupant(null);
@@ -576,7 +428,7 @@ public class Model {
      */
     public static boolean checkWin() {
         return playerCivilization.getTechnology().hasTechnologyWin()
-            || playerCivilization.getStrategy().conqueredTheWorld();
+                || playerCivilization.getStrategy().conqueredTheWorld();
     }
 
     /**
@@ -607,7 +459,7 @@ public class Model {
      */
     public static boolean demolishSelected() {
         if (selected.getOccupant() instanceof Settlement
-            && playerCivilization.getNumSettlements() <= 1) {
+                && playerCivilization.getNumSettlements() <= 1) {
             return false;
         } else if (selected.getOccupant().getOwner() == playerCivilization) {
             ((Building) selected.getOccupant()).demolish();
@@ -616,5 +468,134 @@ public class Model {
             return true;
         }
         return false;
+    }
+    /**
+     * Gets the symbol of the occupant, empty char
+     * if tile is empty
+     * @param int r, int c
+     * @return char
+     */
+    public static char getOccupantSymbol(int r, int c) {
+        if (map.getTile(r, c).isEmpty()) {
+            //empty
+            return ' ';
+        }
+        return map.getTile(r, c).getOccupant().symbol();
+    }
+    /**
+     * Gets the name of the owner of the tile
+     * @param int r, int c
+     * @return String
+     */
+    public static String getOwnerString(int r, int c) {
+        TerrainTile a = map.getTile(r, c);
+        if (a.isEmpty()) {
+            return "";
+        } else {
+            return a.getOccupant().getOwner().getName();
+        }
+    }
+    /**
+    * gets the type of occupent on the til specified
+    * by the row and column
+    * @param int r, int c
+    * @return String
+    */
+    public static String getTileOccupantType(int r, int c) {
+        MapObject occupant = map.getTile(r, c).getOccupant();
+        if (occupant != null) {
+            if (occupant.getOwner() != playerCivilization) {
+                return "ENEMY";
+            } else if (occupant instanceof Building) {
+                return "BUILDING";
+            } else if (occupant instanceof MilitaryUnit) {
+                return "MILITARY_UNIT";
+            } else {
+                return "WORKER_UNIT";
+            }
+        } else if (adjacentTo(selectedRow, selectedCol, "FR_SETTLEMENT")) {
+            return "RECRUIT_SPACE";
+        } else {
+            return "";
+        }
+    }
+
+    public static boolean tileIsEmpty(int r, int c) {
+        return map.getTile(r, c).getOccupant() == null;
+    }
+
+    /**
+     * Attacks one tile with another, assuming that they are already adjacent!
+     *
+     * @param attacker attacking tile
+     * @param target   tile to be attacked
+     * @return whether that attack was successful
+     * <p>
+     * Used by the AI
+     */
+    private static boolean attackTile(TerrainTile attacker,
+                                      TerrainTile target) {
+        if (attacker.getOccupant() instanceof MilitaryUnit) {
+            MilitaryUnit attackingUnit = (MilitaryUnit) attacker.getOccupant();
+            if (attacker.getOccupant().getOwner() != playerCivilization
+                    && attackingUnit.getCanAttack()) {
+                attackingUnit.attack(target.getOccupant());
+
+                if (attackingUnit.isDestroyed()) {
+                    selected.setOccupant(null);
+                }
+
+                if (target.getOccupant().isDestroyed()) {
+                    map.getTile(target.getRow(),
+                            target.getCol()).setOccupant(null);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+    * gets the name of the terrain tile
+    * @param int r, int c
+    * @return String
+    */
+    public static String getTileTerrain(int r, int c) {
+        return map.getTile(r, c).getType().getName();
+    }
+    /**
+    * gets the health of the occupant on the terrain tile
+    * @param int r, int c
+    * @return int
+    */
+    public static int getHealthAt(int r, int c) {
+        return map.getTile(r, c).getOccupant().getHealth();
+    }
+
+    /**
+     * gets the endurance of the MapObject at r, c
+     * @param r the row
+     * @param c the column
+     * @return -1 if the MapObject does not have an endurance
+     */
+    public static int getEnduranceAt(int r, int c) {
+        MapObject a = (map.getTile(r, c).getOccupant());
+        if (a instanceof Unit) {
+            return ((Unit) a).getEndurance();
+        } else {
+            return -1;
+        }
+    }
+    /**
+    * set selected as the old selected
+    */
+    public static void saveSelected() {
+        oldSelected = selected;
+    }
+    /**
+    * set old selected as the selected
+    */
+    public static void restoreSelected() {
+        selected = oldSelected;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Random;
  * @version 3.0
  * @author Taylor Hartman, Ryan Voor, Jim Harris
  */
-class Civilization {
+public class Civilization {
     private static Random rand = new Random();
 
     private String name;
@@ -43,12 +43,6 @@ class Civilization {
         return "You explore your surroundings and acquire 20 resources!";
     }
 
-    /**
-     * @return a String containing all of the skills this Civilization owns.
-     */
-    public String getSkillsString() {
-        return technology.getSkills().toString();
-    }
 
     /**
      * @return a String containing the name of the Civilization.
@@ -272,10 +266,5 @@ class Civilization {
      */
     public Landmark getLandmark() {
         return new Landmark(this);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

@@ -1,8 +1,6 @@
 package model;
 
 import java.util.Random;
-import java.util.NoSuchElementException;
-import java.util.Iterator;
 
 /**
  * Represents a custom Set data structure.
@@ -10,32 +8,7 @@ import java.util.Iterator;
  * @author Ryan Voor
  * @version 1.0
  */
-class MySet<E> implements SimpleSet<E>, Iterable<E> {
-
-    private class MySetIterator implements Iterator<E> {
-
-        private int cursor = 0;
-
-        public boolean hasNext() {
-            return cursor < numElements;
-        }
-
-        public E next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            E answer = data[cursor++];
-            return answer;
-        }
-
-        public void remove() {
-            try {
-                MySet.this.remove(data[cursor - 1]);
-            } catch (ElementDoesNotExistException e) {
-                System.out.println("Will never happen");
-            }
-        }
-    }
+class MySet<E> implements SimpleSet<E> {
 
     private E[] data;
     private int numElements;
@@ -48,10 +21,6 @@ class MySet<E> implements SimpleSet<E>, Iterable<E> {
     public MySet() {
         this.data = (E[]) new Object[startingSize];
         this.numElements = 0;
-    }
-
-    public Iterator<E> iterator() {
-        return new MySetIterator();
     }
 
     @Override
@@ -105,11 +74,9 @@ class MySet<E> implements SimpleSet<E>, Iterable<E> {
         E[] results = (E[]) new Object[elements.length];
         int counter = 0;
         for (E element: elements) {
-            // this guard is in case there are duplicate elements in the
-            // parameter array
-            if (this.contains(element)) {
-                results[counter++] = this.remove(element);
-            }
+            // hypothetically a ElementDoesNotExistException should never
+            // get thrown from this call since we checked above
+            results[counter++] = this.remove(element);
         }
         return results;
     }
