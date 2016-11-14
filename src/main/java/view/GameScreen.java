@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import javafx.scene.layout.BorderPane;
 
 /**
  * This class represents the GameScreen class
@@ -28,7 +29,7 @@ public class GameScreen extends BorderPane {
     * @return reosuce menu
     */
     public static ResourcesMenu getResources() {
-        //TODO
+        return null;
     }
 
 

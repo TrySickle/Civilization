@@ -9,6 +9,9 @@ import model.QinDynasty;
 import model.RomanEmpire;
 import model.Egypt;
 import model.Bandit;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 /**
  * Created by Tian-Yo Yang on 11/11/2016.
@@ -20,13 +23,16 @@ public class CivilizationGame extends Application {
      * this method should display a scene on the stage
      */
     public void start(Stage primaryStage) {
-        //TODO
+        Scene scene = new Scene(new StartScreen(), 1067, 600);
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
     /**
      * This is the main method that launches the javafx application
      */
     public static void main(String[] args) {
-        //TODO
+        launch(args);
     }
     /**
     * This method is responsible for setting the scene to the corresponding
@@ -36,7 +42,7 @@ public class CivilizationGame extends Application {
     */
 
     public Scene startGame() {
-        //TODO
+        return null;
     }
 
 
