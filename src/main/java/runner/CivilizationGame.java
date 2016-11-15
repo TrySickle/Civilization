@@ -12,18 +12,20 @@ import model.Bandit;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Button;
 
 /**
  * Created by Tian-Yo Yang on 11/11/2016.
  */
 public class CivilizationGame extends Application {
-
+    private StartScreen startScreen = new StartScreen();
     /**
      * this method is called upon running/launching the application
      * this method should display a scene on the stage
      */
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(new StartScreen(), 1067, 600);
+        Scene scene = new Scene(startScreen, 1067, 600);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -41,7 +43,13 @@ public class CivilizationGame extends Application {
     * @return Scene
     */
 
-    public Scene startGame() {
+    public static Scene startGame() {
+        TextInputDialog input = new TextInputDialog("Town Name");
+        input.setTitle("A New Settlement");
+        input.setHeaderText("You have built a Settlement!");
+        input.setContentText("Enter the Name of your first town:");
+        input.show();
+
         return null;
     }
 

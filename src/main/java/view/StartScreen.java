@@ -59,6 +59,9 @@ public class StartScreen extends StackPane {
         civListView.setMinHeight(96);
         civListView.setMaxHeight(96);
         startButton = new Button("START");
+        startButton.setOnAction(e -> {
+            runner.CivilizationGame.startGame();
+        });
         vbox.getChildren().addAll(selectText, civListView, startButton);
         this.setBackground(new Background(background));
         this.getChildren().addAll(vbox);
