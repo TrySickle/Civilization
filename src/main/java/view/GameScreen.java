@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 /**
  * This class represents the GameScreen class
@@ -15,7 +16,8 @@ public class GameScreen extends BorderPane {
      *
      */
     public GameScreen() {
-        //TODO
+        ResourcesMenu resourcesMenu = new ResourcesMenu();
+        this.setTop(resourcesMenu.getRootNode());
     }
 
     /**

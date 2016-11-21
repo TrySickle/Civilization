@@ -6,13 +6,38 @@ import javafx.scene.text.Text;
 import model.Civilization;
 
 public class ResourcesMenu {
-
+    private int stratLevel;
+    private int resources;
+    private int numSettlements;
+    private int money;
+    private int food;
+    private int happiness;
+    private HBox hBox;
     /**
     * creates a resource bar and display the current state of
     * your civilization's resouces
     */
     public ResourcesMenu() {
-        //TODO
+        Civilization civ = GameController.getCivilization();
+        stratLevel = civ.getStrategy().getStrategyLevel();
+        resources = civ.getResources();
+        numSettlements = civ.getNumSettlements();
+        money = civ.getTreasury().getCoins();
+        food = civ.getFood();
+        happiness = civ.getHappiness();
+
+        Text stratText = new Text(String.format("Strat Level: %d", stratLevel));
+        Text resourceText = new Text(String.format("Resources: %d", resources));
+        Text settleText = new Text(String.format("Settlements: %d",
+            numSettlements));
+        Text moneyText = new Text(String.format("Money: %d", money));
+        Text foodText = new Text(String.format("Food: %d", food));
+        Text happyText = new Text(String.format("Happiness: %d", happiness));
+
+        hBox = new HBox();
+        hBox.setSpacing(15);
+        hBox.getChildren().addAll(stratText, resourceText, settleText,
+            moneyText, foodText, happyText);
     }
     /**
     * should update all the resouce values to the current
@@ -26,6 +51,6 @@ public class ResourcesMenu {
     * @return a hbox representation of the resource bar
     */
     public HBox getRootNode() {
-        return null;
+        return hBox;
     }
 }

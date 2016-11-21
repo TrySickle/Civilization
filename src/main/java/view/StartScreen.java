@@ -59,9 +59,6 @@ public class StartScreen extends StackPane {
         civListView.setMinHeight(96);
         civListView.setMaxHeight(96);
         startButton = new Button("START");
-        startButton.setOnAction(e -> {
-            runner.CivilizationGame.startGame();
-        });
         vbox.getChildren().addAll(selectText, civListView, startButton);
         this.setBackground(new Background(background));
         this.getChildren().addAll(vbox);
@@ -82,12 +79,4 @@ public class StartScreen extends StackPane {
     public ListView<CivEnum> getCivList() {
         return civListView;
     }
-    /**
-    * shoud set the civilization taken in by the method to the civilization
-    * selected for this screen
-    */
-    public void setCivilization(Civilization c) {
-
-    }
-
 }
