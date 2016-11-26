@@ -16,8 +16,7 @@ public class AbstractMenu {
     private Button endTurnButton = new Button("End Turn");
     private Text terrain = new Text();
     private Text unitStatus = new Text();
-    private VBox menu = new VBox(10, terrain, unitStatus,
-            exploreButton, endTurnButton);
+    private VBox menu = new VBox(10, terrain, exploreButton, endTurnButton);
 
     public AbstractMenu() {
         menu.setPrefWidth(PREFWIDTH);
@@ -87,7 +86,7 @@ public class AbstractMenu {
         unitStatus.setText("");
         if (GameController.getLastClicked() != null) {
             terrain.setText(GameController.getLastClicked()
-                    .getTile().getType().toString());
+                .getTile().getType().toString());
             if (!GameController.getLastClicked().getTile().isEmpty()) {
                 unitStatus.setText(GameController.getLastClicked()
                         .getTile().getOccupant().getStatusString());

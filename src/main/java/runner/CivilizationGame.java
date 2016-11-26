@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 
 /**
@@ -25,8 +24,11 @@ import javafx.scene.control.ListView;
  */
 public class CivilizationGame extends Application {
     private StartScreen startScreen;
+    private GameScreen gameScreen;
     private Stage stage;
     private Scene scene;
+    private int height = 725;
+    private int width = 850;
     /**
      * this method is called upon running/launching the application
      * this method should display a scene on the stage
@@ -52,7 +54,7 @@ public class CivilizationGame extends Application {
     */
 
     public Scene startGame() {
-        scene = new Scene(startScreen, 1067, 600);
+        scene = new Scene(startScreen, width, height);
         stage.setScene(scene);
         TextInputDialog input = new TextInputDialog("Town Name");
         input.setTitle("A New Settlement");
@@ -62,19 +64,21 @@ public class CivilizationGame extends Application {
         ListView<CivEnum> civListView = startScreen.getCivList();
         Button startButton = startScreen.getStartButton();
         startButton.setOnAction(e -> {
-            Optional<String> result = input.showAndWait();
-            if (result.isPresent()) {
-                GameController.setCivilization(new Civilization(
-                    civListView.getSelectionModel().getSelectedItems()
-                    .get(0).toString()));
-                GridFX.getMap().putSettlement(result.get(), GameController.getCivilization(), 9, 0);
-                GridFX.getMap().putSettlement("Bandits",
-                    GameController.getBandits(), 4, 4);
-                System.out.println(result.get());
-                scene = new Scene(new GameScreen(), 1067, 600);
-                stage.setScene(scene);
-            }
-        });
+                Optional<String> result = input.showAndWait();
+                if (result.isPresent()) {
+                    GameController.setCivilization(new Civilization(
+                        civListView.getSelectionModel().getSelectedItems()
+                        .get(0).toString()));
+                    GridFX.getMap().putSettlement(result.get(),
+                        GameController.getCivilization(), 0, 9);
+                    GridFX.getMap().putSettlement("Bandits",
+                        GameController.getBandits(), 9, 0);
+                    gameScreen = new GameScreen();
+                    scene = new Scene(gameScreen, width, height);
+                    stage.setScene(scene);
+                    gameScreen.update();
+                }
+            });
 
         return scene;
     }

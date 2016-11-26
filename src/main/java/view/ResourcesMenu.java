@@ -18,13 +18,7 @@ public class ResourcesMenu {
     * your civilization's resouces
     */
     public ResourcesMenu() {
-        Civilization civ = GameController.getCivilization();
-        stratLevel = civ.getStrategy().getStrategyLevel();
-        resources = civ.getResources();
-        numSettlements = civ.getNumSettlements();
-        money = civ.getTreasury().getCoins();
-        food = civ.getFood();
-        happiness = civ.getHappiness();
+        update();
 
         Text stratText = new Text(String.format("Strat Level: %d", stratLevel));
         Text resourceText = new Text(String.format("Resources: %d", resources));
@@ -44,13 +38,20 @@ public class ResourcesMenu {
     * state of your resource values
     */
     public void update() {
-
+        Civilization civ = GameController.getCivilization();
+        stratLevel = civ.getStrategy().getStrategyLevel();
+        resources = civ.getResources();
+        numSettlements = civ.getNumSettlements();
+        money = civ.getTreasury().getCoins();
+        food = civ.getFood();
+        happiness = civ.getHappiness();
     }
     /**
     * updates the resource bar and returns the resource bar
     * @return a hbox representation of the resource bar
     */
     public HBox getRootNode() {
+        update();
         return hBox;
     }
 }

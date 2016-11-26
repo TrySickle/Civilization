@@ -46,11 +46,12 @@ public class StartScreen extends StackPane {
             "File:./src/main/java/view/civ_background.png");
         background = new BackgroundImage(bImage, BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, true));
+            new BackgroundSize(875, 750, false, false, false, false));
         selectText = new Text("Select a Civilization to Begin");
         selectText.setFont(new Font(16));
         selectText.setFill(Color.RED);
-        ObservableList<CivEnum> civs = FXCollections.observableArrayList(CivEnum.ANCIENT_EGYPT,
+        ObservableList<CivEnum> civs =
+            FXCollections.observableArrayList(CivEnum.ANCIENT_EGYPT,
             CivEnum.QIN_DYNASTY, CivEnum.ROMAN_EMPIRE);
         civListView = new ListView<CivEnum>(civs);
         civListView.setFixedCellSize(24);
