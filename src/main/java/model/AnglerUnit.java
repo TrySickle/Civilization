@@ -16,7 +16,7 @@ public class AnglerUnit extends Unit implements Convertable {
      *
      * @param owner The owner of this unit.
      */
-    AnglerUnit(Civilization owner) {
+    public AnglerUnit(Civilization owner) {
         super(owner);
     }
 

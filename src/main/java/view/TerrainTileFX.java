@@ -65,6 +65,7 @@ public class TerrainTileFX extends StackPane {
         }
         if (tile.isEmpty()) {
             overlay.setFill(Color.TRANSPARENT);
+            this.getChildren().setAll(background, overlay);
         } else {
             overlay.setFill(tile.getOccupant().getColor());
             icon = new ImageView(tile.getOccupant().getImage());

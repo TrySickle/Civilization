@@ -11,12 +11,5 @@ public class StatusMenu extends AbstractMenu {
      */
 
     public StatusMenu() {
-        // super();
-        // if (GameController.getLastClicked() != null) {
-        //     newTerrain = new Text(GameController.getLastClicked()
-        //         .getTile().getType().toString());
-        //     newMenu = getRootNode();
-        //     newMenu.getChildren().set(0, newTerrain);
-        // }
     }
 }

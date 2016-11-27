@@ -3,6 +3,7 @@ package view;
 import controller.GameController;
 import javafx.scene.control.Button;
 
+
 /**
  * Created by William on 11/11/2016.
  */
@@ -17,9 +18,12 @@ public class MilitaryMenu extends AbstractMenu {
     public MilitaryMenu() {
         this.addMenuItem(attackButton);
         this.addMenuItem(moveButton);
+
         attackButton.setOnAction(e -> {
                 GameController.attacking();
+                GameController.updateResourcesBar();
             });
+
         moveButton.setOnAction(e -> {
                 GameController.moving();
             });

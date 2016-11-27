@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * @version 1.0
  * @author Jim Harris
  */
-class RangedUnit extends MilitaryUnit {
+public class RangedUnit extends MilitaryUnit {
 
     /**
      * Public constructor.

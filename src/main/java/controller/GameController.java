@@ -14,6 +14,7 @@ import model.Unit;
 import view.GameScreen;
 import view.GridFX;
 import view.TerrainTileFX;
+import javafx.scene.control.Alert;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -161,6 +162,10 @@ public class GameController {
             || !((MilitaryUnit) attacker.getOccupant()).getCanAttack()
             || !GridFX.adjacent(attacker, enemy)) {
             state = GameState.NEUTRAL;
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Can not attack!");
+            alert.setTitle("Invalid Action");
+            alert.showAndWait();
             return;
         }
 

@@ -18,20 +18,9 @@ public class ResourcesMenu {
     * your civilization's resouces
     */
     public ResourcesMenu() {
-        update();
-
-        Text stratText = new Text(String.format("Strat Level: %d", stratLevel));
-        Text resourceText = new Text(String.format("Resources: %d", resources));
-        Text settleText = new Text(String.format("Settlements: %d",
-            numSettlements));
-        Text moneyText = new Text(String.format("Money: %d", money));
-        Text foodText = new Text(String.format("Food: %d", food));
-        Text happyText = new Text(String.format("Happiness: %d", happiness));
-
         hBox = new HBox();
         hBox.setSpacing(15);
-        hBox.getChildren().addAll(stratText, resourceText, settleText,
-            moneyText, foodText, happyText);
+        update();
     }
     /**
     * should update all the resouce values to the current
@@ -45,6 +34,17 @@ public class ResourcesMenu {
         money = civ.getTreasury().getCoins();
         food = civ.getFood();
         happiness = civ.getHappiness();
+
+        Text stratText = new Text(String.format("Strat Level: %d", stratLevel));
+        Text resourceText = new Text(String.format("Resources: %d", resources));
+        Text settleText = new Text(String.format("Settlements: %d",
+            numSettlements));
+        Text moneyText = new Text(String.format("Money: %d", money));
+        Text foodText = new Text(String.format("Food: %d", food));
+        Text happyText = new Text(String.format("Happiness: %d", happiness));
+
+        hBox.getChildren().setAll(stratText, resourceText, settleText,
+            moneyText, foodText, happyText);
     }
     /**
     * updates the resource bar and returns the resource bar
