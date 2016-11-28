@@ -91,6 +91,7 @@ public class GameController {
         //updates views, switches context menu depending on state
         lastClicked.updateTileView();
         GameScreen.switchMenu(state);
+        updateResourcesBar();
     }
 
     /**

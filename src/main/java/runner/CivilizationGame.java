@@ -66,7 +66,7 @@ public class CivilizationGame extends Application {
         startButton.setOnAction(e -> {
                 Optional<String> result = input.showAndWait();
                 if (result.isPresent()) {
-                    GameController.setCivilization(new Civilization(
+                    GameController.setCivilization(getCiv(
                         civListView.getSelectionModel().getSelectedItems()
                         .get(0).toString()));
                     GridFX.getMap().putSettlement(result.get(),
@@ -81,5 +81,18 @@ public class CivilizationGame extends Application {
             });
 
         return scene;
+    }
+
+    private Civilization getCiv(String name) {
+        switch (name) {
+        case "Ancient Egypt":
+            return new Egypt();
+        case "Qin Dynasty":
+            return new QinDynasty();
+        case "Roman Empire":
+            return new RomanEmpire();
+        default:
+            return new Civilization("DEFAULT");
+        }
     }
 }
