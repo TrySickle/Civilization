@@ -54,6 +54,7 @@ public class BuildingMenu extends AbstractMenu {
                         lastClicked.setOccupant(null);
                         GameController.getCivilization().
                             decrementNumSettlements();
+                        GameController.setLastClicked(lastClickedFX);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("You can not demolish your last"
@@ -64,10 +65,9 @@ public class BuildingMenu extends AbstractMenu {
                 } else {
                     ((Building) lastClicked.getOccupant()).demolish();
                     lastClicked.setOccupant(null);
+                    GameController.setLastClicked(lastClickedFX);
                 }
             }
-            GameController.updateResourcesBar();
-            lastClickedFX.updateTileView();
         });
     }
 }

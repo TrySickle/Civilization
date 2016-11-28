@@ -71,8 +71,8 @@ public class CivilizationGame extends Application {
                         .get(0).toString()));
                     GridFX.getMap().putSettlement(result.get(),
                         GameController.getCivilization(), 0, 9);
-                    GridFX.getMap().putSettlement("Bandits",
-                        GameController.getBandits(), 9, 0);
+                    GridFX.getMap().addEnemies(
+                        ((Bandit) GameController.getBandits()), 1);
                     gameScreen = new GameScreen();
                     scene = new Scene(gameScreen, width, height);
                     stage.setScene(scene);

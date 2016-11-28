@@ -55,39 +55,40 @@ public class RecruitMenu extends AbstractMenu {
                     Unit unit;
                     switch (selectedUnit) {
                     case "Melee Unit":
-                        unit = new MeleeUnit(civ);
+                        unit = civ.getMeleeUnit();
                         break;
                     case "Ranged Unit":
-                        unit = new RangedUnit(civ);
+                        unit = civ.getRangedUnit();
                         break;
                     case "Hybrid Unit":
-                        unit = new HybridUnit(civ);
+                        unit = civ.getHybridUnit();
                         break;
                     case "Siege Unit":
-                        unit = new SiegeUnit(civ);
+                        unit = civ.getSiegeUnit();
                         break;
                     case "Settlers":
-                        unit = new SettlerUnit(civ, "nah");
+                        unit = civ.getSettlerUnit("nah");
                         break;
                     case "Farmers":
-                        unit = new FarmerUnit(civ);
+                        unit = civ.getFarmerUnit();
                         break;
                     case "Coal Miners":
-                        unit = new CoalMinerUnit(civ);
+                        unit = civ.getCoalMinerUnit();
                         break;
                     case "Anglers":
-                        unit = new AnglerUnit(civ);
+                        unit = civ.getAnglerUnit();
                         break;
                     case "Master Builders":
-                        unit = new MasterBuilderUnit(civ);
+                        unit = civ.getMasterBuilderUnit();
                         break;
                     default:
-                        unit = new MeleeUnit(civ);
+                        unit = civ.getMeleeUnit();
                         break;
                     }
                     if (unit.isAffordable()) {
                         lastClicked.setOccupant(unit);
                         unit.applyInitialCosts();
+                        GameController.setLastClicked(lastClickedFX);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("Can not afford this unit!");
@@ -95,8 +96,6 @@ public class RecruitMenu extends AbstractMenu {
                         alert.showAndWait();
                     }
                 }
-                lastClickedFX.updateTileView();
-                GameController.updateResourcesBar();
             });
     }
 }

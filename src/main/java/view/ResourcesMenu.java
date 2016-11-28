@@ -7,6 +7,7 @@ import model.Civilization;
 
 public class ResourcesMenu {
     private int stratLevel;
+    private int techPoints;
     private int resources;
     private int numSettlements;
     private int money;
@@ -29,6 +30,7 @@ public class ResourcesMenu {
     public void update() {
         Civilization civ = GameController.getCivilization();
         stratLevel = civ.getStrategy().getStrategyLevel();
+        techPoints = civ.getTechnology().getTechPoints();
         resources = civ.getResources();
         numSettlements = civ.getNumSettlements();
         money = civ.getTreasury().getCoins();
@@ -36,6 +38,7 @@ public class ResourcesMenu {
         happiness = civ.getHappiness();
 
         Text stratText = new Text(String.format("Strat Level: %d", stratLevel));
+        Text techText = new Text(String.format("Tech Points: %d", techPoints));
         Text resourceText = new Text(String.format("Resources: %d", resources));
         Text settleText = new Text(String.format("Settlements: %d",
             numSettlements));
@@ -43,7 +46,7 @@ public class ResourcesMenu {
         Text foodText = new Text(String.format("Food: %d", food));
         Text happyText = new Text(String.format("Happiness: %d", happiness));
 
-        hBox.getChildren().setAll(stratText, resourceText, settleText,
+        hBox.getChildren().setAll(stratText, techText, resourceText, settleText,
             moneyText, foodText, happyText);
     }
     /**

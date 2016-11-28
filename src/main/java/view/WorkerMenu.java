@@ -36,8 +36,7 @@ public class WorkerMenu extends AbstractMenu {
                 TileType type = lastClicked.getType();
                 if (occupant.canConvert(type)) {
                     lastClicked.setOccupant(occupant.convert());
-                    lastClickedFX.updateTileView();
-                    GameController.updateResourcesBar();
+                    GameController.setLastClicked(lastClickedFX);
                 } else {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText("You can not convert that!");
