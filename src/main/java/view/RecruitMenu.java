@@ -3,15 +3,6 @@ package view;
 import controller.GameController;
 import model.Civilization;
 import model.Unit;
-import model.MeleeUnit;
-import model.RangedUnit;
-import model.HybridUnit;
-import model.SiegeUnit;
-import model.SettlerUnit;
-import model.FarmerUnit;
-import model.CoalMinerUnit;
-import model.AnglerUnit;
-import model.MasterBuilderUnit;
 import model.TerrainTile;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
@@ -36,20 +27,22 @@ public class RecruitMenu extends AbstractMenu {
             FXCollections.observableArrayList("Melee Unit", "Ranged Unit",
                 "Hybrid Unit", "Siege Unit", "Settlers", "Farmers",
                 "Coal Miners", "Anglers", "Master Builders");
-            recruitMenu = new ListView<String>(units);
-            recruitMenu.setFixedCellSize(24);
-            recruitMenu.setMinWidth(140);
-            recruitMenu.setMaxWidth(140);
-            recruitMenu.setMinHeight(220);
-            recruitMenu.setMaxHeight(220);
-            this.addMenuItem(recruitMenu);
-            this.addMenuItem(selectButton);
+        recruitMenu = new ListView<String>(units);
+        recruitMenu.setFixedCellSize(24);
+        recruitMenu.setMinWidth(140);
+        recruitMenu.setMaxWidth(140);
+        recruitMenu.setMinHeight(220);
+        recruitMenu.setMaxHeight(220);
+        this.addMenuItem(recruitMenu);
+        this.addMenuItem(selectButton);
 
-            selectButton.setOnAction(e -> {
+        selectButton.setOnAction(e -> {
                 String selectedUnit =
-                    recruitMenu.getSelectionModel().getSelectedItems().get(0);
+                    recruitMenu.getSelectionModel().
+                    getSelectedItems().get(0);
                 Civilization civ = GameController.getCivilization();
-                TerrainTileFX lastClickedFX = GameController.getLastClicked();
+                TerrainTileFX lastClickedFX =
+                    GameController.getLastClicked();
                 if (!(lastClickedFX == null)) {
                     TerrainTile lastClicked = lastClickedFX.getTile();
                     Unit unit;
@@ -90,7 +83,8 @@ public class RecruitMenu extends AbstractMenu {
                         unit.applyInitialCosts();
                         GameController.setLastClicked(lastClickedFX);
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        Alert alert = new Alert(
+                            Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("Can not afford this unit!");
                         alert.setTitle("Invalid Recruit");
                         alert.showAndWait();

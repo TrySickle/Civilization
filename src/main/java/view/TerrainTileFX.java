@@ -56,9 +56,9 @@ public class TerrainTileFX extends StackPane {
         if (!(GameController.getLastClicked() == null)) {
             selectedTile = GameController.getLastClicked().getTile();
         }
-        if (!(selectedTile == null) &&
-            selectedTile.getRow() == this.getTile().getRow() &&
-            selectedTile.getCol() == this.getTile().getCol()) {
+        if (!(selectedTile == null)
+            && selectedTile.getRow() == this.getTile().getRow()
+            && selectedTile.getCol() == this.getTile().getCol()) {
             overlay.setStroke(Color.YELLOW);
         } else {
             overlay.setStroke(Color.BLACK);

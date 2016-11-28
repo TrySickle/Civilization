@@ -2,7 +2,6 @@ package view;
 
 import controller.GameController;
 import model.Convertable;
-import model.MapObject;
 import model.TerrainTile;
 import controller.TileType;
 import javafx.scene.control.Button;
@@ -24,26 +23,26 @@ public class WorkerMenu extends AbstractMenu {
         this.addMenuItem(convertButton);
 
         moveButton.setOnAction(e -> {
-            GameController.moving();
-        });
+                GameController.moving();
+            });
 
         convertButton.setOnAction(e -> {
-            TerrainTileFX lastClickedFX = GameController.getLastClicked();
-            if (!(lastClickedFX == null)) {
-                TerrainTile lastClicked = lastClickedFX.getTile();
-                Convertable occupant = (Convertable)
-                    (lastClicked.getOccupant());
-                TileType type = lastClicked.getType();
-                if (occupant.canConvert(type)) {
-                    lastClicked.setOccupant(occupant.convert());
-                    GameController.setLastClicked(lastClickedFX);
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText("You can not convert that!");
-                    alert.setTitle("Invalid Action");
-                    alert.showAndWait();
+                TerrainTileFX lastClickedFX = GameController.getLastClicked();
+                if (!(lastClickedFX == null)) {
+                    TerrainTile lastClicked = lastClickedFX.getTile();
+                    Convertable occupant = (Convertable)
+                        (lastClicked.getOccupant());
+                    TileType type = lastClicked.getType();
+                    if (occupant.canConvert(type)) {
+                        lastClicked.setOccupant(occupant.convert());
+                        GameController.setLastClicked(lastClickedFX);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setHeaderText("You can not convert that!");
+                        alert.setTitle("Invalid Action");
+                        alert.showAndWait();
+                    }
                 }
-            }
-        });
+            });
     }
 }

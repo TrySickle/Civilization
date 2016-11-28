@@ -1,6 +1,5 @@
 package view;
 
-import model.Civilization;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;

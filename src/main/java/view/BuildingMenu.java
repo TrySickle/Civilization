@@ -23,51 +23,54 @@ public class BuildingMenu extends AbstractMenu {
         this.addMenuItem(demolishButton);
 
         investButton.setOnAction(e -> {
-            TerrainTileFX lastClickedFX = GameController.getLastClicked();
-            if (!(lastClickedFX == null)) {
-                TerrainTile lastClicked = lastClickedFX.getTile();
-                MapObject occupant = lastClicked.getOccupant();
-                if (GameController.getCivilization().getTreasury().getCoins() >=
-                    25 && (occupant instanceof Building)) {
+                TerrainTileFX lastClickedFX = GameController.getLastClicked();
+                if (!(lastClickedFX == null)) {
+                    TerrainTile lastClicked = lastClickedFX.getTile();
+                    MapObject occupant = lastClicked.getOccupant();
+                    if (GameController.getCivilization().
+                        getTreasury().getCoins() >= 25
+                        && (occupant instanceof Building)) {
                         ((Building) occupant).invest();
                         GameController.getCivilization().getTreasury().
                             spend(25);
                         GameController.updateResourcesBar();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText("You can not afford that investment!");
-                    alert.setTitle("Invalid Investment");
-                    alert.showAndWait();
-                }
-            }
-
-        });
-
-        demolishButton.setOnAction(e -> {
-            TerrainTileFX lastClickedFX = GameController.getLastClicked();
-            if (!(lastClickedFX == null)) {
-                TerrainTile lastClicked = lastClickedFX.getTile();
-                if (lastClicked.getOccupant() instanceof Settlement) {
-                    if (GameController.getCivilization().
-                        getNumSettlements() > 1) {
-                        ((Building) lastClicked.getOccupant()).demolish();
-                        lastClicked.setOccupant(null);
-                        GameController.getCivilization().
-                            decrementNumSettlements();
-                        GameController.setLastClicked(lastClickedFX);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setHeaderText("You can not demolish your last"
-                            + " settlement!");
-                        alert.setTitle("Invalid Demolish");
+                        alert.setHeaderText("You can not afford that"
+                            + "investment!");
+                        alert.setTitle("Invalid Investment");
                         alert.showAndWait();
                     }
-                } else {
-                    ((Building) lastClicked.getOccupant()).demolish();
-                    lastClicked.setOccupant(null);
-                    GameController.setLastClicked(lastClickedFX);
                 }
-            }
-        });
+
+            });
+
+        demolishButton.setOnAction(e -> {
+                TerrainTileFX lastClickedFX = GameController.getLastClicked();
+                if (!(lastClickedFX == null)) {
+                    TerrainTile lastClicked = lastClickedFX.getTile();
+                    if (lastClicked.getOccupant() instanceof Settlement) {
+                        if (GameController.getCivilization().
+                            getNumSettlements() > 1) {
+                            ((Building) lastClicked.getOccupant()).demolish();
+                            lastClicked.setOccupant(null);
+                            GameController.getCivilization().
+                                decrementNumSettlements();
+                            GameController.setLastClicked(lastClickedFX);
+                        } else {
+                            Alert alert = new Alert(
+                                Alert.AlertType.CONFIRMATION);
+                            alert.setHeaderText("You can not demolish your last"
+                                + " settlement!");
+                            alert.setTitle("Invalid Demolish");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        ((Building) lastClicked.getOccupant()).demolish();
+                        lastClicked.setOccupant(null);
+                        GameController.setLastClicked(lastClickedFX);
+                    }
+                }
+            });
     }
 }

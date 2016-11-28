@@ -7,7 +7,6 @@ import view.StartScreen;
 import view.CivEnum;
 import view.GameScreen;
 import view.GridFX;
-import model.Map;
 import model.QinDynasty;
 import model.RomanEmpire;
 import model.Egypt;
