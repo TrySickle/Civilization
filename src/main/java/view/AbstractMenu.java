@@ -16,7 +16,8 @@ public class AbstractMenu {
     private Button endTurnButton = new Button("End Turn");
     private Text terrain = new Text();
     private Text unitStatus = new Text();
-    private VBox menu = new VBox(10, terrain, exploreButton, endTurnButton);
+    private VBox menu = new VBox(10, terrain, unitStatus, exploreButton,
+        endTurnButton);
 
     public AbstractMenu() {
         menu.setPrefWidth(PREFWIDTH);

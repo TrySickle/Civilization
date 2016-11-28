@@ -54,6 +54,7 @@ public class StartScreen extends StackPane {
             FXCollections.observableArrayList(CivEnum.ANCIENT_EGYPT,
             CivEnum.QIN_DYNASTY, CivEnum.ROMAN_EMPIRE);
         civListView = new ListView<CivEnum>(civs);
+        civListView.getSelectionModel().selectFirst();
         civListView.setFixedCellSize(24);
         civListView.setMinWidth(200);
         civListView.setMaxWidth(200);
