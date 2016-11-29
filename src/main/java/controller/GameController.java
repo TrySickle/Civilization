@@ -16,7 +16,6 @@ import view.GridFX;
 import view.TerrainTileFX;
 import javafx.scene.control.Alert;
 import audio.Audio;
-import view.Translate;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
