@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 public class GameScreen extends BorderPane {
     private static HBox menuBox;
     private static ResourcesMenu resourcesMenu;
+    private static GridFX gridFX;
     /**
      * Creates a new view into the game. this layout should include
      * the rescource bar, grid map, and action menus
@@ -18,8 +19,9 @@ public class GameScreen extends BorderPane {
     public GameScreen() {
         menuBox = new HBox(new StatusMenu().getRootNode());
         resourcesMenu = new ResourcesMenu();
+        gridFX = GridFX.getInstance();
         this.setTop(resourcesMenu.getRootNode());
-        this.setCenter(GridFX.getInstance());
+        this.setCenter(gridFX);
         this.setLeft(menuBox);
     }
 
@@ -36,6 +38,10 @@ public class GameScreen extends BorderPane {
     */
     public static ResourcesMenu getResources() {
         return resourcesMenu;
+    }
+
+    public static GridFX getGridFX() {
+        return gridFX;
     }
 
     /**

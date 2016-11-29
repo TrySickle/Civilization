@@ -16,6 +16,10 @@ import view.GridFX;
 import view.TerrainTileFX;
 import javafx.scene.control.Alert;
 import audio.Audio;
+import view.Translate;
+import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -26,6 +30,7 @@ public class GameController {
     private static Civilization enemyCiv = new Bandit();
     private static GameState state = GameState.NEUTRAL;
     private static Random rand = new Random();
+    private static StackPane mover;
 
     public enum GameState {
         NEUTRAL, MILITARY, WORKER, BUILDING, RECRUITING, ATTACKING, MOVING;
@@ -40,6 +45,7 @@ public class GameController {
      * @param last
      */
     public static void setLastClicked(TerrainTileFX last) {
+        boolean moved = false;
         TerrainTileFX previousLastClicked = lastClicked;
         if (last == null) { //abort everything and reset, end turn was pressed
             lastClicked = null;
@@ -56,6 +62,7 @@ public class GameController {
         } else if (state == GameState.MOVING) {
             if (move(last)) {
                 lastClicked = last;
+                moved = true;
             }
         }
         //update lastClicked
@@ -90,7 +97,9 @@ public class GameController {
         }
 
         //updates views, switches context menu depending on state
-        lastClicked.updateTileView();
+        if (!moved) {
+            lastClicked.updateTileView();
+        }
         GameScreen.switchMenu(state);
         updateResourcesBar();
     }
@@ -116,7 +125,7 @@ public class GameController {
      */
     private static boolean move(TerrainTileFX newTile) {
         boolean result = move(lastClicked.getTile(), newTile.getTile());
-        newTile.updateTileView();
+        //newTile.updateTileView();
         lastClicked.updateTileView();
         return result;
     }
@@ -131,6 +140,16 @@ public class GameController {
                         end.getType().getCost()))) {
             return false;
         }
+        mover = new StackPane(new Rectangle(70, 70,
+            start.getOccupant().getColor()), new
+            ImageView(start.getOccupant().getImage()));
+        GameScreen.getGridFX().add(mover, start.getCol(),
+            start.getRow());
+        Translate.translate(mover, start, end);
+        mover.setOnMousePressed(e -> {
+            GameScreen.getGridFX().getChildren().remove(mover);
+            GameController.setLastClicked(lastClicked);
+        });
         end.setOccupant(start.getOccupant());
         start.setOccupant(null);
         int endCost = end.getType().getCost();
