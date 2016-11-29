@@ -357,8 +357,8 @@ public class GameController {
                     TerrainTileFX result = null;
 
                     for (Node node : GameScreen.getGridFX().getChildren()) {
-                        if (GameScreen.getGridFX().getRowIndex(node) ==
-                            tile.getRow() && GameScreen.getGridFX().
+                        if (GameScreen.getGridFX().getRowIndex(node)
+                            == tile.getRow() && GameScreen.getGridFX().
                             getColumnIndex(node) == tile.getCol()) {
                             result = (TerrainTileFX) node;
                             break;
