@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import audio.Audio;
 
 /**
  * Created by Tian-Yo Yang on 11/11/2016.
@@ -39,6 +40,7 @@ public class StartScreen extends StackPane {
     * image and display a list of civilizations and a start button
     */
     public StartScreen() {
+        Audio.playMusic("start");
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.BOTTOM_CENTER);
         Image bImage = new Image(
@@ -53,12 +55,15 @@ public class StartScreen extends StackPane {
             FXCollections.observableArrayList(CivEnum.ANCIENT_EGYPT,
             CivEnum.QIN_DYNASTY, CivEnum.ROMAN_EMPIRE);
         civListView = new ListView<CivEnum>(civs);
+        civListView.setOnMousePressed(e -> {
+                Audio.playSound("menu");
+            });
         civListView.getSelectionModel().selectFirst();
         civListView.setFixedCellSize(24);
         civListView.setMinWidth(200);
         civListView.setMaxWidth(200);
-        civListView.setMinHeight(96);
-        civListView.setMaxHeight(96);
+        civListView.setMinHeight(75);
+        civListView.setMaxHeight(75);
         startButton = new Button("START");
         vbox.getChildren().addAll(selectText, civListView, startButton);
         this.setBackground(new Background(background));

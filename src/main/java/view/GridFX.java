@@ -3,6 +3,8 @@ package view;
 import javafx.scene.layout.GridPane;
 import model.Map;
 import model.TerrainTile;
+import javafx.scene.Node;
+import java.util.Iterator;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -21,11 +23,15 @@ public class GridFX extends GridPane {
     }
 
     public static void update() {
-        instance.getChildren().forEach(n -> {
-                if (n instanceof TerrainTileFX) {
-                    ((TerrainTileFX) n).updateTileView();
-                }
-            });
+        for (Iterator<Node> iterator = instance.getChildren().iterator();
+            iterator.hasNext();) {
+            Node n = iterator.next();
+            if (n instanceof TerrainTileFX) {
+                ((TerrainTileFX) n).updateTileView();
+            } else {
+                iterator.remove();
+            }
+        }
     }
 
     public static boolean adjacent(TerrainTileFX current, TerrainTileFX other) {

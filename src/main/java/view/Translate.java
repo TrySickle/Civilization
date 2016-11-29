@@ -41,17 +41,18 @@ public class Translate {
         translateTransition.play();
         translateTransition.setOnFinished(e -> {
                 GameScreen.getGridFX().getChildren().remove(sword);
+                GridFX.update();
             });
     }
 
     public static int getRotation(TerrainTile start, TerrainTile end) {
         if (start.getRow() > end.getRow()) {
             if (start.getCol() > end.getCol()) {
-                return -135;
+                return 135;
             } else if (start.getCol() == end.getCol()) {
                 return 180;
             } else {
-                return 135;
+                return -135;
             }
         } else if (start.getRow() == end.getRow()) {
             if (start.getCol() > end.getCol()) {

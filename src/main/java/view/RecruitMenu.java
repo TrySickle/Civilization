@@ -29,6 +29,9 @@ public class RecruitMenu extends AbstractMenu {
                 "Hybrid Unit", "Siege Unit", "Settlers", "Farmers",
                 "Coal Miners", "Anglers", "Master Builders");
         recruitMenu = new ListView<String>(units);
+        recruitMenu.setOnMousePressed(e -> {
+                Audio.playSound("menu");
+            });
         recruitMenu.setFixedCellSize(24);
         recruitMenu.setMinWidth(140);
         recruitMenu.setMaxWidth(140);

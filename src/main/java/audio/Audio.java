@@ -1,6 +1,8 @@
 package audio;
 
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 import java.io.File;
 import javafx.util.Duration;
 
@@ -35,6 +37,18 @@ public class Audio {
         new File("src/main/java/audio/endturn.wav").toURI().toString());
     private static AudioClip demolishSound = new AudioClip(
         new File("src/main/java/audio/demolish.mp3").toURI().toString());
+    private static AudioClip menuSound = new AudioClip(
+        new File("src/main/java/audio/menuclick.wav").toURI().toString());
+    private static AudioClip clickSound = new AudioClip(
+        new File("src/main/java/audio/click.wav").toURI().toString());
+    private static AudioClip buttonSound = new AudioClip(
+        new File("src/main/java/audio/button.mp3").toURI().toString());
+    private static MediaPlayer startMusic = new MediaPlayer(
+        new Media(new File("src/main/java/audio/start.mp3").
+        toURI().toString()));
+    private static MediaPlayer gameMusic = new MediaPlayer(
+        new Media(new File("src/main/java/audio/game.mp3").
+        toURI().toString()));
 
     public static void playSound(String name) {
         switch (name) {
@@ -83,8 +97,35 @@ public class Audio {
         case "demolish":
             demolishSound.play();
             break;
+        case "menu":
+            menuSound.play();
+            break;
+        case "click":
+            clickSound.play();
+            break;
+        case "button":
+            buttonSound.play();
+            break;
         default:
             errorSound.play();
+            break;
+        }
+    }
+
+    public static void playMusic(String desc) {
+        switch (desc) {
+        case "start":
+            startMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            startMusic.setVolume(0.5);
+            startMusic.play();
+            break;
+        case "game":
+            gameMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            gameMusic.setVolume(0.5);
+            startMusic.stop();
+            gameMusic.play();
+            break;
+        default:
             break;
         }
     }

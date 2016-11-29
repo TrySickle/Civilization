@@ -50,6 +50,7 @@ public class GameController {
      * @param last
      */
     public static void setLastClicked(TerrainTileFX last) {
+        Audio.playSound("click");
         boolean moved = false;
         TerrainTileFX previousLastClicked = lastClicked;
         if (last == null) { //abort everything and reset, end turn was pressed

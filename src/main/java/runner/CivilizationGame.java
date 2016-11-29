@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import audio.Audio;
 
 /**
  * Created by Tian-Yo Yang on 11/11/2016.
@@ -63,6 +64,7 @@ public class CivilizationGame extends Application {
         ListView<CivEnum> civListView = startScreen.getCivList();
         Button startButton = startScreen.getStartButton();
         startButton.setOnAction(e -> {
+                Audio.playSound("button");
                 Optional<String> result = input.showAndWait();
                 if (result.isPresent()) {
                     GameController.setCivilization(getCiv(
@@ -76,6 +78,7 @@ public class CivilizationGame extends Application {
                     scene = new Scene(gameScreen, width, height);
                     stage.setScene(scene);
                     gameScreen.update();
+                    Audio.playMusic("game");
                 }
             });
 
