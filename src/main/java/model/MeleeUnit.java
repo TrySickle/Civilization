@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * @author Jim Harris
  * @version 1.0
  */
-public class MeleeUnit extends MilitaryUnit {
+class MeleeUnit extends MilitaryUnit {
 
     /**
      * Public constructor

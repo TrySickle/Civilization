@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * @author Jim Harris
  * @version 1.0
  */
-public class BlackPowderUnit extends SiegeUnit {
+class BlackPowderUnit extends SiegeUnit {
 
     /**
      * Public constructor
