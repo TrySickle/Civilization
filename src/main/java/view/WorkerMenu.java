@@ -6,6 +6,7 @@ import model.TerrainTile;
 import controller.TileType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
+import audio.Audio;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -36,10 +37,12 @@ public class WorkerMenu extends AbstractMenu {
                     if (occupant.canConvert(type)) {
                         lastClicked.setOccupant(occupant.convert());
                         GameController.setLastClicked(lastClickedFX);
+                        Audio.playSound("convert");
                     } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("You can not convert that!");
                         alert.setTitle("Invalid Action");
+                        Audio.playSound("error");
                         alert.showAndWait();
                     }
                 }

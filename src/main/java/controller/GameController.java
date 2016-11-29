@@ -15,6 +15,8 @@ import view.GameScreen;
 import view.GridFX;
 import view.TerrainTileFX;
 import javafx.scene.control.Alert;
+import audio.Audio;
+import view.Translate;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -133,6 +135,7 @@ public class GameController {
         end.setOccupant(start.getOccupant());
         start.setOccupant(null);
         int endCost = end.getType().getCost();
+        Audio.playSound(end.getType().getName());
         ((Unit) end.getOccupant()).deductEndurance(endCost);
         state = GameState.NEUTRAL;
         return true;
@@ -166,12 +169,13 @@ public class GameController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("Can not attack!");
             alert.setTitle("Invalid Action");
+            Audio.playSound("error");
             alert.showAndWait();
             return;
         }
 
         ((MilitaryUnit) attacker.getOccupant()).attack(enemy.getOccupant());
-
+        Audio.playSound("attack");
         if (((MilitaryUnit) attacker.getOccupant()).isDestroyed()) {
             attacker.setOccupant(null);
         }

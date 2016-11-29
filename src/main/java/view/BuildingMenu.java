@@ -7,6 +7,7 @@ import model.TerrainTile;
 import model.MapObject;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
+import audio.Audio;
 
 /**
  * This class should represents the bulding menu
@@ -33,12 +34,14 @@ public class BuildingMenu extends AbstractMenu {
                         ((Building) occupant).invest();
                         GameController.getCivilization().getTreasury().
                             spend(25);
+                        Audio.playSound("invest");
                         GameController.updateResourcesBar();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("You can not afford that"
-                            + "investment!");
+                            + " investment!");
                         alert.setTitle("Invalid Investment");
+                        Audio.playSound("error");
                         alert.showAndWait();
                     }
                 }
@@ -57,18 +60,21 @@ public class BuildingMenu extends AbstractMenu {
                             GameController.getCivilization().
                                 decrementNumSettlements();
                             GameController.setLastClicked(lastClickedFX);
+                            Audio.playSound("demolish");
                         } else {
                             Alert alert = new Alert(
                                 Alert.AlertType.CONFIRMATION);
                             alert.setHeaderText("You can not demolish your last"
                                 + " settlement!");
                             alert.setTitle("Invalid Demolish");
+                            Audio.playSound("error");
                             alert.showAndWait();
                         }
                     } else {
                         ((Building) lastClicked.getOccupant()).demolish();
                         lastClicked.setOccupant(null);
                         GameController.setLastClicked(lastClickedFX);
+                        Audio.playSound("demolish");
                     }
                 }
             });

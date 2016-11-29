@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import audio.Audio;
 
 /**
  * Created by RuYiMarone on 11/12/2016.
@@ -24,21 +25,25 @@ public class AbstractMenu {
         unitStatus.setWrappingWidth(120);
 
         exploreButton.setOnMousePressed(e -> {
+                Audio.playSound("explore");
                 GameController.getCivilization().explore();
                 if (endTurn()) {
                     Alert newAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     newAlert.setHeaderText("Congratulations");
                     newAlert.setTitle("You Won!");
+                    Audio.playSound("victory");
                     newAlert.showAndWait();
                     System.exit(0);
                 }
             });
 
         endTurnButton.setOnAction(event -> {
+                Audio.playSound("endTurn");
                 if (endTurn()) {
                     Alert newAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     newAlert.setHeaderText("Congratulations");
                     newAlert.setTitle("You Won!");
+                    Audio.playSound("victory");
                     newAlert.showAndWait();
                     System.exit(0);
                 }
@@ -74,6 +79,7 @@ public class AbstractMenu {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("Your last settlement has been destroyed!");
             alert.setTitle("Game Over");
+            Audio.playSound("error");
             alert.showAndWait();
             System.exit(0);
         }

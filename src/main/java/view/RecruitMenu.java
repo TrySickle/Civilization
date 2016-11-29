@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import audio.Audio;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -82,11 +83,13 @@ public class RecruitMenu extends AbstractMenu {
                         lastClicked.setOccupant(unit);
                         unit.applyInitialCosts();
                         GameController.setLastClicked(lastClickedFX);
+                        Audio.playSound("recruit");
                     } else {
                         Alert alert = new Alert(
                             Alert.AlertType.CONFIRMATION);
                         alert.setHeaderText("Can not afford this unit!");
                         alert.setTitle("Invalid Recruit");
+                        Audio.playSound("error");
                         alert.showAndWait();
                     }
                 }
