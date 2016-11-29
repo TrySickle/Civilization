@@ -147,9 +147,9 @@ public class GameController {
             start.getRow());
         Translate.translate(mover, start, end);
         mover.setOnMousePressed(e -> {
-            GameScreen.getGridFX().getChildren().remove(mover);
-            GameController.setLastClicked(lastClicked);
-        });
+                GameScreen.getGridFX().getChildren().remove(mover);
+                GameController.setLastClicked(lastClicked);
+            });
         end.setOccupant(start.getOccupant());
         start.setOccupant(null);
         int endCost = end.getType().getCost();

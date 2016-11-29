@@ -1,7 +1,6 @@
 package view;
 
 import javafx.animation.TranslateTransition;
-import javafx.scene.layout.Pane;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import model.TerrainTile;
