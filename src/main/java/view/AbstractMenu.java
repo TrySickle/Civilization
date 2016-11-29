@@ -73,7 +73,6 @@ public class AbstractMenu {
         GameController.setLastClicked(null);
         GameController.tick();
         GameController.ai();
-        GridFX.update();
         GameController.updateResourcesBar();
         if (GameController.getCivilization().getNumSettlements() <= 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

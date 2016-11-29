@@ -21,8 +21,11 @@ public class GridFX extends GridPane {
     }
 
     public static void update() {
-        instance.getChildren().forEach(
-                n -> ((TerrainTileFX) n).updateTileView());
+        instance.getChildren().forEach(n -> {
+                if (n instanceof TerrainTileFX) {
+                    ((TerrainTileFX) n).updateTileView();
+                }
+            });
     }
 
     public static boolean adjacent(TerrainTileFX current, TerrainTileFX other) {

@@ -20,6 +20,7 @@ import view.Translate;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.Node;
 
 /**
  * Created by RuYiMarone on 11/11/2016.
@@ -150,10 +151,6 @@ public class GameController {
         GameScreen.getGridFX().add(mover, start.getCol(),
             start.getRow());
         Translate.translate(mover, start, end);
-        // mover.setOnMousePressed(e -> {
-        //         GameScreen.getGridFX().getChildren().removeAll(mover);
-        //         GameController.setLastClicked(lastClicked);
-        //     });
         end.setOccupant(start.getOccupant());
         start.setOccupant(null);
         int endCost = end.getType().getCost();
@@ -195,7 +192,7 @@ public class GameController {
             alert.showAndWait();
             return;
         }
-
+        Translate.attackTranslate(attacker, enemy);
         ((MilitaryUnit) attacker.getOccupant()).attack(enemy.getOccupant());
         Audio.playSound("attack");
         if (((MilitaryUnit) attacker.getOccupant()).isDestroyed()) {
@@ -356,6 +353,17 @@ public class GameController {
                 //Very much an edge case
                 if (tile.getOccupant() != null) {
                     move(tile, GridFX.getMap().getTile(newRow, newCol));
+                    TerrainTileFX result = null;
+
+                    for (Node node : GameScreen.getGridFX().getChildren()) {
+                        if (GameScreen.getGridFX().getRowIndex(node) ==
+                            tile.getRow() && GameScreen.getGridFX().
+                            getColumnIndex(node) == tile.getCol()) {
+                            result = (TerrainTileFX) node;
+                            break;
+                        }
+                    }
+                    result.updateTileView();
                 }
             }
         }
