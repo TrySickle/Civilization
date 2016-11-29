@@ -36,6 +36,10 @@ public class GameController {
         NEUTRAL, MILITARY, WORKER, BUILDING, RECRUITING, ATTACKING, MOVING;
     }
 
+    public static StackPane getMover() {
+        return mover;
+    }
+
     /**
      * Updates the state machine to control the game
      *
@@ -146,10 +150,10 @@ public class GameController {
         GameScreen.getGridFX().add(mover, start.getCol(),
             start.getRow());
         Translate.translate(mover, start, end);
-        mover.setOnMousePressed(e -> {
-                GameScreen.getGridFX().getChildren().remove(mover);
-                GameController.setLastClicked(lastClicked);
-            });
+        // mover.setOnMousePressed(e -> {
+        //         GameScreen.getGridFX().getChildren().removeAll(mover);
+        //         GameController.setLastClicked(lastClicked);
+        //     });
         end.setOccupant(start.getOccupant());
         start.setOccupant(null);
         int endCost = end.getType().getCost();
