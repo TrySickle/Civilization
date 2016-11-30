@@ -33,8 +33,6 @@ public class Audio {
         new File("src/main/java/audio/convert.wav").toURI().toString());
     private static AudioClip exploreSound = new AudioClip(
         new File("src/main/java/audio/explore.wav").toURI().toString());
-    private static AudioClip endTurnSound = new AudioClip(
-        new File("src/main/java/audio/endturn.wav").toURI().toString());
     private static AudioClip demolishSound = new AudioClip(
         new File("src/main/java/audio/demolish.mp3").toURI().toString());
     private static AudioClip menuSound = new AudioClip(
@@ -90,9 +88,6 @@ public class Audio {
             break;
         case "explore":
             exploreSound.play();
-            break;
-        case "endTurn":
-            endTurnSound.play();
             break;
         case "demolish":
             demolishSound.play();

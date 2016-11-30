@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import javafx.scene.control.Button;
+import audio.Audio;
 
 
 /**
@@ -22,10 +23,12 @@ public class MilitaryMenu extends AbstractMenu {
         attackButton.setOnAction(e -> {
                 GameController.attacking();
                 GameController.updateResourcesBar();
+                Audio.playSound("explore");
             });
 
         moveButton.setOnAction(e -> {
                 GameController.moving();
+                Audio.playSound("explore");
             });
     }
 }

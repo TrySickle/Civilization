@@ -25,6 +25,7 @@ public class WorkerMenu extends AbstractMenu {
 
         moveButton.setOnAction(e -> {
                 GameController.moving();
+                Audio.playSound("explore");
             });
 
         convertButton.setOnAction(e -> {

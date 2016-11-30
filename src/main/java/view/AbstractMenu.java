@@ -38,7 +38,7 @@ public class AbstractMenu {
             });
 
         endTurnButton.setOnAction(event -> {
-                Audio.playSound("endTurn");
+                Audio.playSound("explore");
                 if (endTurn()) {
                     Alert newAlert = new Alert(Alert.AlertType.CONFIRMATION);
                     newAlert.setHeaderText("Congratulations");
