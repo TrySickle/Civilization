@@ -69,6 +69,12 @@ public class GameController {
             if (move(last)) {
                 lastClicked = last;
                 moved = true;
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Can not move!");
+                alert.setTitle("Invalid Move");
+                Audio.playSound("error");
+                alert.showAndWait();
             }
         }
         //update lastClicked
