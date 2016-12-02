@@ -29,6 +29,12 @@ public abstract class MapObject implements Symbolizable, Viewable {
             color = Color.rgb(255, 0, 255, 0.4);
         } else if (owner instanceof RomanEmpire) {
             color = Color.rgb(255, 0, 0, 0.4);
+        } else if (owner instanceof America) {
+            color = Color.rgb(55, 55, 255, 0.4);
+        } else if (owner instanceof England) {
+            color = Color.rgb(40, 235, 80, 0.4);
+        } else if (owner instanceof France) {
+                color = Color.rgb(239, 195, 73, 0.4);
         } else {
             color = color.rgb(0, 0, 0, 0.4);
         }

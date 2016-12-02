@@ -22,5 +22,23 @@ public enum CivEnum {
         public String toString() {
             return "Roman Empire";
         }
+    },
+    AMERICA {
+        @Override
+        public String toString() {
+            return "America";
+        }
+    },
+    ENGLAND {
+        @Override
+        public String toString() {
+            return "England";
+        }
+    },
+    FRANCE {
+        @Override
+        public String toString() {
+            return "France";
+        }
     }
 }

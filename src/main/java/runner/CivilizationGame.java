@@ -10,6 +10,9 @@ import view.GridFX;
 import model.QinDynasty;
 import model.RomanEmpire;
 import model.Egypt;
+import model.America;
+import model.England;
+import model.France;
 import model.Bandit;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -93,6 +96,12 @@ public class CivilizationGame extends Application {
             return new QinDynasty();
         case "Roman Empire":
             return new RomanEmpire();
+        case "America":
+            return new America();
+        case "England":
+            return new England();
+        case "France":
+            return new France();
         default:
             return new Civilization("DEFAULT");
         }

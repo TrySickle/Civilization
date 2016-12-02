@@ -53,7 +53,8 @@ public class StartScreen extends StackPane {
         selectText.setFill(Color.RED);
         ObservableList<CivEnum> civs =
             FXCollections.observableArrayList(CivEnum.ANCIENT_EGYPT,
-            CivEnum.QIN_DYNASTY, CivEnum.ROMAN_EMPIRE);
+            CivEnum.QIN_DYNASTY, CivEnum.ROMAN_EMPIRE, CivEnum.AMERICA,
+            CivEnum.ENGLAND, CivEnum.FRANCE);
         civListView = new ListView<CivEnum>(civs);
         civListView.setOnMousePressed(e -> {
                 Audio.playSound("menu");
@@ -62,8 +63,8 @@ public class StartScreen extends StackPane {
         civListView.setFixedCellSize(24);
         civListView.setMinWidth(200);
         civListView.setMaxWidth(200);
-        civListView.setMinHeight(75);
-        civListView.setMaxHeight(75);
+        civListView.setMinHeight(147);
+        civListView.setMaxHeight(147);
         startButton = new Button("START");
         vbox.getChildren().addAll(selectText, civListView, startButton);
         this.setBackground(new Background(background));
