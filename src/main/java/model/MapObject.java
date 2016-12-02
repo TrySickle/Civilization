@@ -34,7 +34,7 @@ public abstract class MapObject implements Symbolizable, Viewable {
         } else if (owner instanceof England) {
             color = Color.rgb(40, 235, 80, 0.4);
         } else if (owner instanceof France) {
-                color = Color.rgb(239, 195, 73, 0.4);
+            color = Color.rgb(239, 195, 73, 0.4);
         } else {
             color = color.rgb(0, 0, 0, 0.4);
         }
